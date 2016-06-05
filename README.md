@@ -1,0 +1,2 @@
+# programmer-notes
+Programmer notes.
