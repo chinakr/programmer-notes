@@ -2616,6 +2616,10 @@ subl app/models/order.rb
 
 部署成功！
 
+### Rails应用的自动化部署
+
+参考：[用nginx+Puma+Mina部署Rails应用程序](rails-deploy-nginx-puma-mina.md)
+
 
 ## 项目实例
 
