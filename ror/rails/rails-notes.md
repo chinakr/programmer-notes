@@ -3,48 +3,104 @@
 
 ## 参考资料
 
-  * 电子书
-    * [Rails 5 开发进阶](https://www.gitbook.com/book/kelby/rails-beginner-s-guide/details)：自己使用 Rails 已经有几年时间了，我一直想对它有个全面、系统的了解。所以编写、整理了这本书，供自己学习和使用，尽量做到全面、系统，有讲概念，有讲原理。 — kelby
-      * 本书主要包括两部分：Rails 源码剖析和 Rails 使用指南。Rails 是一个 Web 开发框架，也是一个工具。"工欲善其事必先利其器"，想要更好的使用 Rails 这个工具，清楚其背后的魔法，阅读源代码是必备功课。
-      * 本书尽量做到系统、全面，从源码出发，会讲解到原理。本书大部分内容为原创，少数内容为整理网上资料，鉴于参考资料太多，恕我不能一一列举来源。
-  * 命令行
-    * [The Rails Command Line](http://guides.rubyonrails.org/command_line.html)
-  * 路由
-    * [Rails 5 improves searching for routes with advanced options](http://blog.bigbinary.com/2016/02/16/rails-5-options-for-rake-routes.html)
-    * [Rails Routing from the Outside In](http://guides.rubyonrails.org/routing.html)
-    * [ActionDispatch::Routing](http://api.rubyonrails.org/classes/ActionDispatch/Routing.html)
-  * 数据库
-    * [Populating the Database with seeds.rb](http://www.xyzpub.com/en/ruby-on-rails/3.2/seed_rb.html)
-    * [Purge or recreate a Ruby on Rails database](http://stackoverflow.com/questions/4116067/purge-or-recreate-a-ruby-on-rails-database)
-  * 日期时间
-    * [rails generates model field:type, what are the options for field:type?](http://stackoverflow.com/questions/4384284/rails-generates-model-fieldtype-what-are-the-options-for-fieldtype)：`:primary_key, :string, :text, :integer, :float, :decimal, :datetime, :timestamp, :time, :date, :binary, :boolean, :references`
-  * Model
-    * [Active Record Basics](http://guides.rubyonrails.org/active_record_basics.html)
-    * [Advanced Rails model generators](http://railsguides.net/advanced-rails-model-generators/)：`rails generate model photo album:references`
-  * View
-    * [Form Helpers](http://guides.rubyonrails.org/form_helpers.html)
-    * Foundation笔记
-    * Sass笔记
-  * 静态文件
-    * [The Asset Pipeline](http://guides.rubyonrails.org/asset_pipeline.html)：挺长的一个文档，不过写得很清楚。
-    * [Where do you put CSS files in a rails app directory?](http://stackoverflow.com/questions/1058886/where-do-you-put-css-files-in-a-rails-app-directory)
-  * 项目实例
-    * 用Rails 5和Foundation 6开发在线报名系统
+* 电子书
+    + [Ruby on Rails Tutorial by Michael Hartl](https://www.railstutorial.org/book "Learn Web Development with Rails")：在线阅读免费。Michael Hartl因其对Ruby社区所作的贡献，获得了“Ruby Hero Adward”。
+        - the Rails way
+        - Git
+        - GitHub
+        - Heroku
+        - example, demo, a real-world project
+    + [Rails 5 开发进阶](https://www.gitbook.com/book/kelby/rails-beginner-s-guide/details)：自己使用 Rails 已经有几年时间了，我一直想对它有个全面、系统的了解。所以编写、整理了这本书，供自己学习和使用，尽量做到全面、系统，有讲概念，有讲原理。 — kelby
+        - 本书主要包括两部分：Rails 源码剖析和 Rails 使用指南。Rails 是一个 Web 开发框架，也是一个工具。"工欲善其事必先利其器"，想要更好的使用 Rails 这个工具，清楚其背后的魔法，阅读源代码是必备功课。
+        - 本书尽量做到系统、全面，从源码出发，会讲解到原理。本书大部分内容为原创，少数内容为整理网上资料，鉴于参考资料太多，恕我不能一一列举来源。
+* 开发环境配置
+    + [InstallRails.com](http://installrails.com/steps/choose_os)
+    * [Could9](https://c9.io/)：`ruby -v`，`gem install rails -v 5.0.0.rc1`，`rails -v`，`rvm gemset create rails5`，`rvm use 2.3@rails5 --default`，`rails new myapp`，`cd myapp/`，`rails s -b $IP -p $PORT`。
+        + 注意禁用AdBlock Plus，否则语法高亮会失效。
+        + 在右上角的`Settings`中设置`Code Editor (Ace) > Soft Tabs`为`2`(默认为`4`)。
+        + 在右上角的`Share`中设置`Links to share > Application > Public`为打勾，并复制外部访问Rails应用程序的URL。
+    * `Linux笔记`
+    * `macOS笔记`
+    * `Git笔记`
+* 命令行
+    + [The Rails Command Line](http://guides.rubyonrails.org/command_line.html)
+* 路由
+    + [Rails 5 improves searching for routes with advanced options](http://blog.bigbinary.com/2016/02/16/rails-5-options-for-rake-routes.html)
+    + [Rails Routing from the Outside In](http://guides.rubyonrails.org/routing.html)
+    + [ActionDispatch::Routing](http://api.rubyonrails.org/classes/ActionDispatch/Routing.html)
+* 数据库
+    + [Populating the Database with seeds.rb](http://www.xyzpub.com/en/ruby-on-rails/3.2/seed_rb.html)
+    + [Purge or recreate a Ruby on Rails database](http://stackoverflow.com/questions/4116067/purge-or-recreate-a-ruby-on-rails-database)
+* 日期时间
+    + [rails generates model field:type, what are the options for field:type?](http://stackoverflow.com/questions/4384284/rails-generates-model-fieldtype-what-are-the-options-for-fieldtype)：`:primary_key, :string, :text, :integer, :float, :decimal, :datetime, :timestamp, :time, :date, :binary, :boolean, :references`
+* Model
+    + [Active Record Basics](http://guides.rubyonrails.org/active_record_basics.html)
+    + [Advanced Rails model generators](http://railsguides.net/advanced-rails-model-generators/)：`rails generate model photo album:references`
+* View
+    + [Form Helpers](http://guides.rubyonrails.org/form_helpers.html)
+    + `Foundation笔记`
+    + `Sass笔记`
+* 静态文件
+    + [The Asset Pipeline](http://guides.rubyonrails.org/asset_pipeline.html)：挺长的一个文档，不过写得很清楚。
+    + [Where do you put CSS files in a rails app directory?](http://stackoverflow.com/questions/1058886/where-do-you-put-css-files-in-a-rails-app-directory)
+* 项目实例
+    + `用Rails 5和Foundation 6开发在线报名系统`
+
 
 ## 新特性
 
   * Rails 5的新特性
-    * [What’s New in Rails 5](http://www.sitepoint.com/whats-new-rails-5/)
-      * [Rails 5 有什么新特性？](http://www.linuxidc.com/Linux/2015-06/119345.htm)
-      * Rails 5合并了`rails-api`gem，可以直接作为JSON API使用。
-      * Rails 5仅支持Ruby 2.2.1及以上版本。
-      * Rails 5支持Turbolinks 3。
-      * Rails 5支持Action Cable。
-      * Rails 5用`rails`代替了`rake`命令行工具。
+      + [What’s New in Rails 5](http://www.sitepoint.com/whats-new-rails-5/)
+          - [Rails 5 有什么新特性？](http://www.linuxidc.com/Linux/2015-06/119345.htm)
+          - Rails 5合并了`rails-api`gem，可以直接作为JSON API使用。
+          - Rails 5仅支持Ruby 2.2.1及以上版本。
+          - Rails 5支持Turbolinks 3。
+          - Rails 5支持Action Cable。
+          - Rails 5用`rails`代替了`rake`命令行工具。
   * 升级到Rails 5
-    * [Updating to Rails 5.0](http://railsapps.github.io/updating-rails.html)
+      + [Updating to Rails 5.0](http://railsapps.github.io/updating-rails.html)
+
+
+## 知识体系
+
+* 开发环境配置
+    + 安装Ruby
+    + 安装Rails
+    + 配置IDE
+        - 缩进
+        - 语法高亮
+* Web开发的一般原则
+* Web开发的最佳实践
+* 版本控制系统的使用(Git)
+    + 公共仓库GitHub
+    + 私有仓库BitBucket
+* Rails应用程序的开发流程
+    + 脚手架的使用(scaffolding)
+        - 视图
+            * HTML
+            * CSS
+            * JavaScript
+        - 模型
+        - URL
+        - 控制器
+    + 测试驱动开发(TDD)
+* Rails应用程序的测试(minitest)
+    + 单元测试
+    + 功能测试
+    + 集成测试
+* Rails应用程序的部署(部署到生产环境)
+    + 部署到VPS
+        - `nginx + Puma + Mina`
+    + 部署到Heroku
+        - PostgreSQL
+        - Git
+
 
 ## 对Rails的粗浅认识
+
+### 什么是Rails
+
+Rails是一个用Ruby编写的Web开发框架。
 
 ### 总体认识
 
@@ -79,10 +135,55 @@ Rails通过`sprockets-rails`这个gem提供了Asset Pipeline功能。Asset Pipel
 
 如果不想使用Asset Pipeline，可以使用`rails new appname --skip-sprockets`来新建Rails应用。
 
+
+## Rails开发环境的配置
+
+参考资料：
+
+* [Ruby官网](https://www.ruby-lang.org/en/)：最新版本`2.3.1`。
+* [Rails官网](http://rubyonrails.org/)：最新版本`5.0.0.rc1`。
+
+相关代码：
+
+    rvm install 2.3.1
+    rvm use 2.3.1 --default
+    ruby -v
+
+    rvm gemset create rails5
+    rvm use 2.3.1@rails5 --default
+    rvm gemset list
+
+    gem install rails -v 5.0.0.rc1 --no-rdoc --no-ri --verbose
+    rails -v
+
+    mkdir -p ~/workspace/
+    cd ~/workspace/
+    rails new myapp
+    cd myapp/
+
+
 ## Rails的基本用法
 
-### Rails命令行基本用法
+### Bundler的基本用法
 
+    subl Gemfile
+    bundle
+
+注：以`bundle exec`为前缀的命令将使用和Gemfile对应的软件版本，如`bundle exec rails db:migrate`，在一些系统上`bundle exec`可省略，即`rails db:migrate`。
+
+### gem的基本用法
+
+    gem list sqlite3
+
+        *** LOCAL GEMS ***
+        sqlite3 (1.3.11)
+
+    gem list puma
+
+        *** LOCAL GEMS ***
+        puma (3.4.0)
+
+### Rails命令行基本用法
 
     rails help
 
@@ -141,6 +242,24 @@ Rails通过`sprockets-rails`这个gem提供了Asset Pipeline功能。Asset Pipel
             rails new ~/Code/Ruby/weblog
 
             This generates a skeletal Rails installation in ~/Code/Ruby/weblog.
+
+    rails s --help
+
+        Usage: rails server [mongrel, thin etc] [options]
+            -p, --port=port                  Runs Rails on the specified port.
+                                             Default: 3000
+            -b, --binding=IP                 Binds Rails to the specified IP.
+                                             Default: localhost
+            -c, --config=file                Uses a custom rackup configuration.
+            -d, --daemon                     Runs server as a Daemon.
+            -e, --environment=name           Specifies the environment to run this server under (test/development/production).
+                                             Default: development
+            -P, --pid=pid                    Specifies the PID file.
+                                             Default: tmp/pids/server.pid
+            -C, --[no-]dev-caching           Specifies whether to perform caching in development.
+                                             true or false
+
+            -h, --help                       Shows this help message.
 
     rails g
 
@@ -597,6 +716,106 @@ Rails通过`sprockets-rails`这个gem提供了Asset Pipeline功能。Asset Pipel
 
         44 directories, 59 files
 
+其中
+
+* `app/`为应用程序代码的核心目录，包括了模型、视图、控制器和helper
+* `app/assets/`存放应用程序的asset，包括CSS、JS和图片
+* `bin/`为二进制可执行文件
+* `config/`为应用程序的配置文件
+* `db/`为应用程序的数据库文件
+* `lib/`为库模块
+* `lib/assets/`为库模块的asset，包括CSS、JS和图片
+* `log/`为应用程序的日志文件
+* `public/`为Web服务器可直接访问的目录，包括错误信息页面等
+* `test/`为应用程序的测试代码
+* `tmp/`为临时文件
+* `vendor/`为第三方代码，如插件、gem
+* `Gemfile`列出应用程序所依赖的gem
+* `Gemfile.lock`列出了应用程序所依赖的gem的当前版本
+* `Rakefile`定义了可用的rake任务
+* `config.ru`：Rack中间件的配置文件
+
+另外
+
+* `.gitignore`是Git配置文件，指定了版本仓库中应忽略的文件目录
+
+### Rails应用程序依赖的gem
+
+    subl Gemfile
+
+        source 'https://rubygems.org'
+
+        # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+        gem 'rails', '>= 5.0.0.rc1', '< 5.1'
+        # Use sqlite3 as the database for Active Record
+        gem 'sqlite3'
+        # Use Puma as the app server
+        gem 'puma', '~> 3.0'
+        # Use SCSS for stylesheets
+        gem 'sass-rails', '~> 5.0'
+        # Use Uglifier as compressor for JavaScript assets
+        gem 'uglifier', '>= 1.3.0'
+        # Use CoffeeScript for .coffee assets and views
+        gem 'coffee-rails', '~> 4.1.0'
+        # See https://github.com/rails/execjs#readme for more supported runtimes
+        # gem 'therubyracer', platforms: :ruby
+
+        # Use jquery as the JavaScript library
+        gem 'jquery-rails'
+        # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
+        gem 'turbolinks', '~> 5.x'
+        # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+        gem 'jbuilder', '~> 2.0'
+        # Use Redis adapter to run Action Cable in production
+        # gem 'redis', '~> 3.0'
+        # Use ActiveModel has_secure_password
+        # gem 'bcrypt', '~> 3.1.7'
+
+        # Use Capistrano for deployment
+        # gem 'capistrano-rails', group: :development
+
+        group :development, :test do
+          # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+          gem 'byebug', platform: :mri
+        end
+
+        group :development do
+          # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
+          gem 'web-console'
+          gem 'listen', '~> 3.0.5'
+          # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+          gem 'spring'
+          gem 'spring-watcher-listen', '~> 2.0.0'
+        end
+
+        # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+        gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+指定gem版本号的几种方式：
+
+* `gem 'uglifier', '>= 1.3.0'`：高于(含)`1.3.0`的版本号都是可用的。
+* `gem 'rails', '>= 5.0.0.rc1', '< 5.1'`：高于(含)`5.0.0.rc1`、低于(不含)`5.1`的版本号都是可用的。
+* `gem 'puma', '~> 3.0'`：像`3.0.x`或`3.0.x.x`这样的版本号都是可用的。
+
+指定gem依赖关系所属环境的两种方法：
+
+方法一：
+
+    gem 'capistrano-rails', group: :development
+
+方法二：
+
+    group :development do
+      gem 'spring'
+      gem 'spring-watcher-listen', '~> 2.0.0'
+    end
+
+或
+
+    group :development, :test do
+      gem 'spring'
+      gem 'spring-watcher-listen', '~> 2.0.0'
+    end
 
 ### Asset Pipeline的用法
 
@@ -682,7 +901,6 @@ Rails通过`sprockets-rails`这个gem提供了Asset Pipeline功能。Asset Pipel
 
 
 ### 新建Rails应用
-
 
     rails new signup
 
@@ -863,8 +1081,16 @@ Rails通过`sprockets-rails`这个gem提供了Asset Pipeline功能。Asset Pipel
         * bin/rake: spring inserted
         * bin/rails: spring inserted
 
-
 ### 新建脚手架
+
+注：
+
+通过脚手架(scaffold)我们可以快速建立可用的Rails应用程序框架，在此基础上还需要进一步完成
+
+* 在模型中添加数据校验(data validation)
+* 为管理页面添加用户认证(authentication)
+* 添加测试代码(test)
+* 使用布局文件(layout)实现统一的页面风格(styling)和导航(navigation)
 
 一、最简单的Model
 
@@ -1018,7 +1244,11 @@ Rails通过`sprockets-rails`这个gem提供了Asset Pipeline功能。Asset Pipel
 
 设置主页URL：
 
-        root to: 'orders#new'
+    root to: 'orders#new'
+
+或
+
+    root 'order#show'
 
 为自定义Action设置URL：
 
@@ -1594,7 +1824,7 @@ Fixture示例代码：
 
 ### 单元测试
 
-注：针对Model的单元测试。
+注：针对Model的单元测试。默认使用内置的minitest。
 
 单元测试的示例代码：
 
@@ -2616,9 +2846,142 @@ subl app/models/order.rb
 
 部署成功！
 
-### Rails应用的自动化部署
+### Rails应用程序的自动化部署
 
 参考：[用nginx+Puma+Mina部署Rails应用程序](rails-deploy-nginx-puma-mina.md)
+
+### 把Rails应用程序部署到Heroku
+
+参考资料：
+
+* [Heroku官网](https://www.heroku.com/)
+    + [Getting Started with Rails 4.x on Heroku](https://devcenter.heroku.com/articles/getting-started-with-rails4)
+
+把Rails应用程序部署到Heroku十分简单，部署需要使用Git。如果流量不大，使用Heroku通常都是免费的。
+
+Heroku使用PostgreSQL数据库：
+
+    subl Gemfile
+
+        group :production do
+          gem 'pg'
+          gem 'rails_12factor'
+        end
+
+        group :development, :test do
+          gem 'sqlite3'
+        end
+
+    bundle --without production
+
+    git commit -a -m 'Update Gemfile.lock for Heroku.'
+
+其中`pg`gem提供PostgreSQL数据库支持；`rails_12factor`gem提供asset支持(也就是可以访问CSS、JS、图片等静态文件)；`--without production`选项使`bundle`不会把生产环境的gem安装到本地(如`pg`和`rails_12factor`)。
+
+如果系统中已经安装了Heroku命令行客户端：
+
+    heroku version
+
+        heroku-toolbelt/3.43.3 (x86_64-linux) ruby/2.3.0
+        heroku-cli/5.2.20-9d094b0 (linux-amd64) go1.6.2
+        You have no installed plugins.
+
+添加SSH密钥到Heroku：
+
+    heroku login
+
+        Enter your Heroku credentials.
+        Email: chinakr@gmail.com
+        Password (typing will be hidden):
+        Logged in as chinakr@gmail.com
+
+    heroku keys:add
+
+        Heroku CLI submits usage information back to Heroku. If you would like to disable this, set `skip_analytics: true` in /home/ubuntu/.heroku/config.json
+        Found an SSH public key at /home/ubuntu/.ssh/id_rsa.pub
+        ? Would you like to upload it to Heroku? Yes
+        Uploading /home/ubuntu/.ssh/id_rsa.pub SSH key... done
+
+在Heroku上为Rails应用程序创建空间：
+
+    heroku create
+
+        Creating app... done, ⬢ powerful-brook-32947
+        https://powerful-brook-32947.herokuapp.com/ | https://git.heroku.com/powerful-brook-32947.git
+
+    firefox https://powerful-brook-32947.herokuapp.com/
+
+把Rails应用程序部署到Heroku：
+
+    git push heroku master
+
+    firefox https://powerful-brook-32947.herokuapp.com/
+
+注：在本地也可以使用`heroku open`打开Heroku上的Rails应用程序。
+
+为应用程序指定二级域名：
+
+    irb
+
+        2.3.1 :001 > ('a'..'z').to_a.shuffle[0..7].join
+         => "bztonxmy"
+
+    heroku rename bztonxmy
+
+        Renaming powerful-brook-32947 to bztonxmy... done
+        https://bztonxmy.herokuapp.com/ | https://git.heroku.com/bztonxmy.git
+        Git remote heroku updated
+         ▸    Don't forget to update git remotes for all other local checkouts of the app.
+
+    firefox https://bztonxmy.herokuapp.com/
+
+其他可用的Heroku命令：
+
+    heroku --help
+
+        Usage: heroku COMMAND [--app APP] [command-specific-options]
+
+        Primary help topics, type "heroku help TOPIC" for more details:
+
+          addons    #  manage add-on resources
+          apps      #  manage apps (create, destroy)
+          auth      #  authentication (login, logout)
+          config    #  manage app config vars
+          domains   #  manage domains
+          logs      #  display logs for an app
+          ps        #  manage dynos (dynos, workers)
+          releases  #  manage app releases
+          run       #  run one-off commands (console, rake)
+
+        Additional topics:
+
+          access         #  CLI to manage access in Heroku Applications
+          buildpacks     #  manage the buildpack for an app
+          certs          #  manage ssl endpoints for an app
+          drains         #  display drains for an app
+          features       #  manage optional features
+          fork           #  clone an existing app
+          git            #  manage local git repository for app
+          help           #  list commands and display help
+          keys           #  manage authentication keys
+          labs           #  manage optional features
+          local          #  run heroku app locally
+          login          #  login with your Heroku credentials.
+          maintenance    #  manage maintenance mode for an app
+          members        #  manage membership in organization accounts
+          notifications  #  display notifications
+          orgs           #  manage organization accounts
+          pg             #
+          pgbackups      #  manage backups of heroku postgresql databases
+          pipelines      #  manage collections of apps in pipelines
+          plugins        #  manage plugins to the heroku gem
+          redis          #  manage heroku redis instances
+          regions        #  list available regions
+          spaces         #  manage heroku private spaces
+          stack          #  manage the stack for an app
+          status         #  status of the Heroku platform
+          update         #  update the heroku client
+          version        #  display version
 
 
 ## 项目实例
@@ -2696,3 +3059,18 @@ subl app/models/order.rb
     Warning: PATH set to RVM ruby but GEM_HOME and/or GEM_PATH not set, see:
         https://github.com/wayneeseguin/rvm/issues/3212
 
+
+## Cloud9的使用
+
+参考资料：
+
+[Cloud9官网](https://c9.io)：基于Web的集成开发环境，在一个页面中整合了导航、编辑器和终端，简洁易用，功能强大。通workspace和Git管理应用程序代码，和BitBucket、Heroku配合使用可以获得更加完美的体验。
+
+Cloud9使用方法：
+
+* 在编辑器中通过`Cmd + S`快捷键保存当前修改。
+* 在Chrome中使用Cloud9时，记得为该网域关闭AdBlock Plus，否则语法高亮等功能会失效。
+* 在终端中通过`puma s -b $IP -p $PORT`启动测试用Web服务器，在Share菜单中允许从外部访问测试用Web服务器并获得访问所需的URL地址。
+* 在Dashboard中新建workspace，每个workspace相当于一个独立的开发用VPS，具有独立的`~/workspace/`目录。
+* 在一个`~/workspace/`目录下可以通过`rails new appname`创建多个Rails应用程序，在某个应用程序目录下运行`puma s ...`然后可以从外部访问这个应用程序的测试服务器。
+* 经测试，Cloud 9完美支持ruby 2.3.1和rails 5.0.0.rc1。
