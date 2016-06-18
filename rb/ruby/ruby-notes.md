@@ -7,6 +7,8 @@
 
 * 网站
     + [Ruby官网](https://www.ruby-lang.org/en/)：最新版本`2.3.1`，2016年4月26日发布。
+        - [Ruby on Rails Guides](http://guides.rubyonrails.org/)：以主题方式组织的Rails参考册。
+    + [Try Ruby](http://tryruby.org/levels/1/challenges/0)：简短的交互式入门教程。
 * Web电子书
     + [Learn Ruby The Hard Way](http://learnrubythehardway.org/book/)
 * 多看电子书：
@@ -112,6 +114,7 @@ Dave Thomas：Ruby让你能够集中精力解决手头上的问题。
 **字符串**：
 
 字符串中存在转义字符(\xxx)或内插表达式(#{xxx})时应使用双引号，其他情况可优先使用单引号。
+(单双引号的混合使用在Ruby源代码中很常见，不必太介意)
 
 对于全局变量$xxx，内插表达式#{$xxx}应简写为#xxx。
 
@@ -1049,6 +1052,42 @@ print方法不会在行尾输出换行，puts方法会在行尾输出换行：
     输出结果：
 
         {:one=>1, :two=>2, :three=>3}
+
+### `File.expand_path()`方法
+
+参考资料：`Class: File (Ruby 2.3.1) > Class Methods > expand_path`
+
+在`config/puma.rb`中有一行`app_dir = File.expand_path("../..", __FILE__)`，其中的`expand_path()`方法是怎么使用的呢？
+
+语法：
+
+    expand_path(file_name [, dir_string] ) → abs_file_name
+
+说明：
+
+把路径名转换为绝对路径名。
+
+示例代码：
+
+    File.expand_path("~oracle/bin")           #=> "/home/oracle/bin"
+    File.expand_path("ruby", "/usr/bin")      #=> "/usr/bin/ruby"
+
+    # Suppose we are in bin/mygem and want the absolute path of lib/mygem.rb.
+    # So first it resolves the parent of __FILE__, that is bin/,
+    # then go to the parent, the root of the project and appends lib/mygem.rb.
+    File.expand_path("../../lib/mygem.rb", __FILE__)        #=> ".../path/to/project/lib/mygem.rb"
+
+`File.expand_path("../..", __FILE__)`的含义：
+
+`__FILE__`指向的是`/home/deploy/pd.chejj.com.cn/chejjpd/current/config/puma.rb`，因此`../..`后指向`/home/deploy/pd.chejj.com.cn/chejjpd/current/`即`puma.rb`所在目录的父目录。
+
+实际上`current/`是一个符号链接：
+
+    ls -l current
+
+        lrwxrwxrwx 1 deploy deploy 10 Jun  5 22:56 current -> releases/6
+
+因此``File.expand_path("../../../..", __FILE__)``才能指向`/home/deploy/pd.chejj.com.cn/chejjpd/`。
 
 
 ## 日期时间
