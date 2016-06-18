@@ -13,6 +13,27 @@
     + [Rails 5 开发进阶](https://www.gitbook.com/book/kelby/rails-beginner-s-guide/details)：自己使用 Rails 已经有几年时间了，我一直想对它有个全面、系统的了解。所以编写、整理了这本书，供自己学习和使用，尽量做到全面、系统，有讲概念，有讲原理。 — kelby
         - 本书主要包括两部分：Rails 源码剖析和 Rails 使用指南。Rails 是一个 Web 开发框架，也是一个工具。"工欲善其事必先利其器"，想要更好的使用 Rails 这个工具，清楚其背后的魔法，阅读源代码是必备功课。
         - 本书尽量做到系统、全面，从源码出发，会讲解到原理。本书大部分内容为原创，少数内容为整理网上资料，鉴于参考资料太多，恕我不能一一列举来源。
+* 教程
+    + [xdite：我的学习经验](https://ruby-china.org/topics/30294)
+        - (语言平实达意，逻辑性清晰、环环相扣，因此可读性很强——数学系的写文字其实也有优势，让人容易理解)
+        - 练习数学要写证明题，假设一道证题有10个步骤，如果你答题只写`1,2,7,8`的话，老师只会给`1,2`的分。你跳答，老师就知道你作弊了。这样强制数学系的人养成一个习惯，做事情都要从根本想起，把问题想透。 (数学对逻辑的训练：做事情都要从根本想起，把问题想透)
+        - 于是就开了GROWTHSCHOOL，别入是教你入门，我是教你变成职业程序员。因为我之前培养出很多职业程序员，所以很清楚入门技能、方法、职业要求。 (入门级程序员和职业程序员)
+            * 用户故事是教学的好方法，容易理解，对于高级程序员和初级程序员都是如此。
+                + 用户故事教学就是按照用户的使用流程梳理需求和解决方案，然后层层拆解的过程。一直拆解，直到能直接写出程序为止。例如网店管理员需要一个管理后台，首先需要有帐号密码才能登录，登录后要有一个商品列表，能够添加、修改、删除，还要有一个订单列表，能够发货、退换货。
+        - 找到Ruby on Rails，我写大型程序的速度有了很大提升。但后来我发现，自己写程序很快没有用，要很多人一起写才有用。但哪怕只是三、四个人的团队，有效沟通都是一个很大问题。所以要让一个网站快速发展就需要学习项目管理，否则很多事情都乱糟糟的，效率就无法提升。 (编程和项目管理)
+        - 把项目管理练习到极致后，我又发现开发和产品必须结合，否则一味跟从产品经理和老板的意见，最后就会失去热情，做出的产品也不真正满足市场需要——一句话，学编程就要懂产品。 (编程和产品)
+            * 产品和商品不同。产品的价值很低，但商品是有价值的。程序员要想让自己生产的产品变成有价值的商品，就需要懂产品，而不只是别人让你干什么你就干什么，把编程纯粹当作一项工作来做。
+        - 有些新手只想跟大师学，问了一个问题，希望大师回答你。但大师有大师的风格，如果你的问题太蠢太无俚头的话，大师是没有兴趣和你聊天的，这样就会有挫折感。然后新手就会怀疑是自己的问题，还是大师的问题。但事实上根本不是这回事，是你自己没有达到那个境界，频率对不上，问问题的方式也不对。 (境界达不到，频率对不上，就没办法和高手对话)
+        - 大家往往都习惯于选择远大的目标，但事实上学习需要选择适合的目标。 (学习需要选择适合的目标)
+            * 解决问题的能力很重要。有了这个能力，不管软件开发怎么发展，你还是可以用相同的方法找到自己的途径，而与你用什么编程语言无关。例如，我学习iOS编程，它和我之前接触的语言无关，我用相同的方法，把每一个难题控制在我通过努力就可以解决的范围。如果不这么做，我就没办法克服眼前学习上的难关，也就无法继续下去，就会有很强的挫折感。 (控制问题的规模很重要)
+        - 看书、研讨会、工作坊、学习别人的经验是学习编程最快最便宜的办法。因为自学要花时间，而时间是不可逆货币，太贵了。 (时间成本是最高的成本)
+        - 我的哲学是：先做出可以解决问题的东西。 (实用主义) (不忘初心很重要：为了解决问题)
+        - 学会用程序员思维去思考问题，对于没办法手动解决的问题，可以试着用程序去解决看看。比如记帐、计步。 (程序员思维) (也是产品经理思维)
+            * 程序员思维就是把未知的问题列出来，找出已有的模式、已有的解决方案，再用有效率的方法，把大的难题拆解成小的难题然后再支解决，在这个过程中不断学习。 (从未知到已知，从问题到解决问题的过程)
+            * 不具有程序员思维的人，根本不会编程。 (程序员思维是程序员的基本素质)
+        - 学习编程是为了解决生活中困扰我们的问题。今天，对于每个人来说学习编程都很重要，因为未来通过编程解决问题的需求只会越来越多。 (语言、数学、编程是三门基础课程)
+        - 程序是编程的结果，编程语言是表达想法的工具。Web编程，是把日常的商业模式变成网上的商业模式的过程。重点在于如何想出解决问题的方法，并把它具体化，而不在于使用什么编程语言。 (重点是提出解决问题的方法并具体实现)
+        - 程序员的自我奖励：热情、进步、成就感。
 * 开发环境配置
     + [InstallRails.com](http://installrails.com/steps/choose_os)
     * [Could9](https://c9.io/)：`ruby -v`，`gem install rails -v 5.0.0.rc1`，`rails -v`，`rvm gemset create rails5`，`rvm use 2.3@rails5 --default`，`rails new myapp`，`cd myapp/`，`rails s -b $IP -p $PORT`。
@@ -43,8 +64,27 @@
 * 静态文件
     + [The Asset Pipeline](http://guides.rubyonrails.org/asset_pipeline.html)：挺长的一个文档，不过写得很清楚。
     + [Where do you put CSS files in a rails app directory?](http://stackoverflow.com/questions/1058886/where-do-you-put-css-files-in-a-rails-app-directory)
+* 测试
+    + [TDD is dead. Long live testing.](http://david.heinemeierhansson.com/2014/tdd-is-dead-long-live-testing.html "By David Heinemeier Hansson on April 23, 2014")
 * 项目实例
     + `用Rails 5和Foundation 6开发在线报名系统`
+
+
+## 中英文对照
+
+| 英文                              | 中文                  |
+|-----------------------------------|-----------------------|
+| automated testing                 | 自动化测试            |
+| TDD (Test-Driven Development)     | 测试驱动开发          |
+| test suite                        | 测试套件              |
+| regression                        | 退化                  |
+| "Red, Green, Refactor" cycle      | “红、绿、重构”循环    |
+| ERb (embedded Ruby)               | ERb模板系统(嵌入Ruby) |
+| stack trace                       | 栈追踪                |
+| backtrace                         | 向后追踪              |
+| silencer                          | 消音器                |
+| CSRF (Cross-Site Request Forgery) | 跨站脚本攻击          |
+| layout                            | 布局文件              |
 
 
 ## 新特性
@@ -125,6 +165,32 @@ rails应用的rails及ruby版本升级实例：
 
 小结：对于一个rails应用，`Gemfile`、`config/`和`app/`是关键，然后是所依赖的gems。为了减少不可控因素，不是必须的gems尽量不用。
 
+### Rails控制台(console)
+
+Rails控制台是和Rails应用程序交互的有用工具。
+
+启动控制台：
+
+    rails console
+
+或
+
+    rails c
+
+使用`exit`或`quit`命令(或`Ctrl + D`快捷键)退出控制台，返回终端。
+
+以生产环境启动控制台(默认为开发环境)：
+
+    RAILS_ENV=production rails c
+
+示例代码-在控制台下查询模型对象的一对多关系(来自`The Rails Tutorial > Chapter 2: Toy app`)：
+
+    rails c
+    > first_user = User.first
+    > first_user.microposts
+    > one_micropost = first_user.microposts.first
+    > one_microposts.user
+
 ### 关于Asset Pipeline
 
 Rails通过`sprockets-rails`这个gem提供了Asset Pipeline功能。Asset Pipeline主要有3个作用：
@@ -169,7 +235,17 @@ Rails通过`sprockets-rails`这个gem提供了Asset Pipeline功能。Asset Pipel
     subl Gemfile
     bundle
 
-注：以`bundle exec`为前缀的命令将使用和Gemfile对应的软件版本，如`bundle exec rails db:migrate`，在一些系统上`bundle exec`可省略，即`rails db:migrate`。
+注：以`bundle exec`为前缀的命令将使用和Gemfile对应的软件版本，如`bundle exec rails db:migrate`，在一些系统上`bundle exec`可省略，即`rails db:migrate`。可以总是省略`bundle exec`，仅在遇到问题时再加上它试一下。
+
+按照`Gemfile`中指定的版本更新已安装的gem：
+
+    bundle update
+
+在本地(开发环境)安装gem，忽略生产环境下需要的gem：
+
+    bundle --without production
+
+注：bundler会记信`--without production`这个选项，因此只需要运行一次`bundle --without production`，之后就可以用`bundle`代替了。
 
 ### gem的基本用法
 
@@ -1189,7 +1265,58 @@ Rails通过`sprockets-rails`这个gem提供了Asset Pipeline功能。Asset Pipel
     rails db:drop
     rails db:migrate
 
+### 新建控制器
+
+语法说明：
+
+    rails g controller ControllerName <optional action names>.
+
+示例代码：
+
+    rails g controller HelloWorld hello bye
+
+### 删除控制器
+
+    rails destroy controller HelloWorld hello bye
+
+注：动作名称参数(`hello`和`bye`)不能省略。
+
+### 新建模型
+
+    rails g model User name:string email:string
+
+### 删除模型
+
+    rails destroy model User
+
+注：字段参数可以省略。这一点和删除控制器不同。
+
+### 应用数据迁移(migrations)
+
+    rails db:migrate
+
+### 撤销数据迁移(migrations)
+
+撤销最后一次数据迁移(migration)：
+
+    rails db:rollback
+
+撤销所有数据迁移(migrations)：
+
+    rails db:rollback VERSION=0
+
 ### 查看URL路由
+
+HTTP基本操作-四种请求类型：
+
+| HTTP动词 | 定义               |
+|----------|--------------------|
+| GET      | 读取页面；读取数据 |
+| POST     | 提交表单；创建对象 |
+| PATCH    | 修改对象           |
+| DELETE   | 删除对象           |
+
+查看Rails应用程序的URL路由配置：
 
     rails routes
 
@@ -1203,12 +1330,15 @@ Rails通过`sprockets-rails`这个gem提供了Asset Pipeline功能。Asset Pipel
                      PUT    /products/:id(.:format)      products#update
                      DELETE /products/:id(.:format)      products#destroy
 
+注：使用Rails路由至少有两个好处，1) 节约了思考设计和实际编程的时间；2) 统一了设计风格。
+
 ### 自定义路由
 
 参考资料：Rails Guides > Rails Routing from the Outside In
 
 示例代码：
 
+    get 'welcome/hello'    # controller WelcomeController and action hello
     get '/patients/:id', to: 'patients#show'
 
 实例：
@@ -1656,15 +1786,6 @@ Public i18n API最重要的两个方法是`translate`和`localize`，前者用�
 
 ## Model(模型)
 
-### 选取指定字段
-
-参考资料：Rails Guides > Active Record Query Interface > 4 Selecting Specific Fields
-
-示例代码：
-
-    Client.select("viewable_by, locked")
-    Client.select(:name).distinct
-
 ### 确保字段不为空
 
 参考资料：Rails Guides > Active Record Validations > 2.9 presence
@@ -1687,6 +1808,33 @@ Public i18n API最重要的两个方法是`translate`和`localize`，前者用�
       validates :email, uniqueness: true
     end
 
+### 设置字段的最大长度
+
+    class Micropost < ApplicationRecord
+      validates :content, length: { maximum: 140 }
+    end
+
+### 模型的一对多关系
+
+    # app/models/user.rb
+    class User < ApplicationRecord
+      has_many :microposts
+    end
+
+    # app/models/micropost.rb
+    class Micropost < ApplicationRecord
+      belongs_to :user
+    end
+
+### 选取指定字段
+
+参考资料：Rails Guides > Active Record Query Interface > 4 Selecting Specific Fields
+
+示例代码：
+
+    Client.select("viewable_by, locked")
+    Client.select(:name).distinct
+
 ### 查询结果排序
 
 参考资料：Rails Guides > Active Record Query Interface
@@ -1706,9 +1854,44 @@ Public i18n API最重要的两个方法是`translate`和`localize`，前者用�
 
 略。
 
+### 布局文件
+
+在使用`rails new ...`创建Rails应用程序时就生成了布局文件`app/views/layouts/application.html.erb`。
+
+布局文件的作用是消除视图中的重复代码。对于一个网站，页面结构、网站导航这些风格需要统一的东西通常都是在布局文件中定义的。
+
+布局文件中的`<%= yield %>`会被具体页面的视图文件内容所代替。
+
+布局文件中的
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+用于包含CSS和JS文件，它们都是asset pipeline的一部分。
+
+布局文件中的`<%= csrf_meta_tags %>`用于防止跨站脚本攻击。
+
+### 为不同页面设置不同标题
+
+    # app/views/layouts/application.html.erb
+    <title><%= yield :title %></title>
+
+    # app/views/welcome/hello.html.erb
+    <% provide :title, 'Hello Page' %>
+
+之前我的解决方案是：
+
+    # app/views/layouts/application.html.erb
+    <title><%= @title %></title>
+
+    # app/views/welcome/hello.html.erb
+    <% @title = 'Hello Page' %>
+
+两种方法看起来是等效的。
+
 ### 在Rails中应用Foundation
 
-注：Rails布局文件。
+注：首先拷贝Foundation文件，然后修改Rails布局文件。
 
 参考资料：`Foundation笔记 > 布局文件`
 
@@ -1736,7 +1919,11 @@ Public i18n API最重要的两个方法是`translate`和`localize`，前者用�
 
 * Unit Test：单元测试(确保各个组件工作正常；测试粒度最小)
 * Functional Test：功能测试
-* Integration Test：集成测试(确保不同组件协作正常；测试粒度较大)
+* Integration Test：集成测试
+    + 确保不同组件协作正常；测试粒度较大
+    + 跨模型、视图和控制器的功能测试代码
+    + 模拟了用户和应用程序交互的过程
+    + 相对复杂，也更加重要
 * Acceptance Test：验收测试(从用户角度测试整个应用程序；测试粒度最大)
 
 ### 目的、特性
@@ -1750,6 +1937,170 @@ TDD(测试驱动开发)是先编写测试再编写程序的开发方式，编写
 测试代码也是应用程序的文档，告诉我们如何使用程序提供的API。
 
 有了自动化测试，每次完成新代码后，就不必在Web浏览器中打开相应页面进行手动检查了，只需要运行自动测试即可，这样可以大大提高开发效率，节省开发时间。
+
+### 使用测试的三个好处
+
+1. 避免退化，即开发过程某些功能忽然失效；
+2. 更放心地进行代码重构；
+3. 作为了解程序运行方式和API设计的示例代码。
+
+### 什么是测试驱动开发(TDD)
+
+测试驱动开发(TDD，Test-Driven Development)要求在编写应用程序代码前先完成测试代码，从而把整个编程过程变成一个编写代码以通过测试的过程。
+
+### 什么时候应该先写测试代码
+
+注：测试代码位于`test/`目录下。
+
+* 如果测试代码比应用程序代码 简单得多，那么应该先写测试代码。
+* 对于有安全隐患的功能，应该先写测试代码。
+
+### 什么时候应该先写应用程序代码
+
+注：应用程序代码位于`app/`目录下。
+
+* 如果一边设计一边写程序，那么应该先写应用程序代码 。
+
+### 其他应该写测试代码的情况
+
+* 当程序出现Bug，就应该编写测试代码来触发这个Bug，然后编写应用程序代码 修复这个Bug。
+* 对于未来可能需要修改的应用程序代码 ，应该编写测试代码。
+* 对于重构过程中可能出错的应用程序代码 ，应该在重构之前编写测试代码。
+
+### 什么情况下可以不写测试代码
+
+* 对于不容易出错，也不太可能需要修改或重构的应用程序代码 ，可以不写测试代码。
+
+### 不同类型测试代码的编写顺序
+
+1. 通常首先编写控制器测试(功能测试)和模型测试(单元测试)代码；
+2. 然后编写集成测试代码。
+
+### “红、绿、重构”循环
+
+即先编写会导致测试失败的测试代码(运行`rails test`时显示为红色)，然后编写或修改应用程序代码使测试能够通过(运行`rails test`时显示为绿色)，接下来再重构。测试驱动开发的过程就是“红、绿、重构”循环的过程。
+
+注：在编程一段时间后，应用程序代码通常会变得丑陋、臃肿或同现大量重复代码，这时就需要及时进行重构。
+
+使用`minitest-reporters`gem实现“红、绿”效果：
+
+    subl Gemfile
+
+        group :test do
+          gem 'minitest-reporters'
+          ...
+        end
+
+    subl test/test_helper.rb
+
+        ...
+        require 'minitest/reporters'
+        Minitest::Reporters.use!
+
+### 向后追踪消音器的使用
+
+用于过滤测试错误提示中的向后追踪信息，以避免错误提示过长。
+
+    subl Gemfile
+
+        group :test do
+          ...
+          gem 'mini_backtrace'
+          ...
+        end
+
+    subl config/initializers/backtrace_silencers.rb
+
+        # Be sure to restart your server when you modify this file.
+        # You can add backtrace silencers for libraries that you're using but don't wish to see in your backtraces.
+        Rails.backtrace_cleaner.add_silencer { |line| line =~ /rvm/ }
+
+    rails s
+
+通过上述配置，包含`rvm`的向后追踪信息都会被过滤掉。
+
+### 使用Guard实现自动化测试
+
+Guard监测文件系统的变化(根据`Guardfile`的配置)，一旦有变化就运行测试。
+
+注：以下代码未测试过。信息来源为“Ruby on Rails Tutorial by Michael Hartl”。
+
+    subl Gemfile
+
+        group :test do
+          ...
+          gem 'guard'
+          gem 'guard-minitest'
+        end
+
+    guard init
+
+    subl Guardfile
+
+        # Defines the matching rules for Guard.
+        guard :minitest, spring: true, all_on_start: false do
+          watch(%r{^test/(.*)/?(.*)_test\.rb$})
+          watch('test/test_helper.rb') { 'test' }
+          watch('config/routes.rb')    { integration_tests }
+          watch(%r{^app/models/(.*?)\.rb$}) do |matches|
+            "test/models/#{matches[1]}_test.rb"
+          end
+          watch(%r{^app/controllers/(.*?)_controller\.rb$}) do |matches|
+            resource_tests(matches[1])
+          end
+          watch(%r{^app/views/([^/]*?)/.*\.html\.erb$}) do |matches|
+            ["test/controllers/#{matches[1]}_controller_test.rb"] +
+            integration_tests(matches[1])
+          end
+          watch(%r{^app/helpers/(.*?)_helper\.rb$}) do |matches|
+            integration_tests(matches[1])
+          end
+          watch('app/views/layouts/application.html.erb') do
+            'test/integration/site_layout_test.rb'
+          end
+          watch('app/helpers/sessions_helper.rb') do
+            integration_tests << 'test/helpers/sessions_helper_test.rb'
+          end
+          watch('app/controllers/sessions_controller.rb') do
+            ['test/controllers/sessions_controller_test.rb',
+             'test/integration/users_login_test.rb']
+          end
+          watch('app/controllers/account_activations_controller.rb') do
+            'test/integration/users_signup_test.rb'
+          end
+          watch(%r{app/views/users/*}) do
+            resource_tests('users') +
+            ['test/integration/microposts_interface_test.rb']
+          end
+        end
+
+        # Returns the integration tests corresponding to the given resource.
+        def integration_tests(resource = :all)
+          if resource == :all
+            Dir["test/integration/*"]
+          else
+            Dir["test/integration/#{resource}_*.rb"]
+          end
+        end
+
+        # Returns the controller tests corresponding to the given resource.
+        def controller_test(resource)
+          "test/controllers/#{resource}_controller_test.rb"
+        end
+
+        # Returns all tests for the given resource.
+        def resource_tests(resource)
+          integration_tests(resource) << controller_test(resource)
+        end
+
+    subl .gitignore
+
+        # Ignore Spring files.
+        /spring/*.pid
+
+    guard
+
+按回车运行所有测试，按`Ctrl + D`退出Guard。
 
 ### 数据库配置
 
@@ -1822,6 +2173,16 @@ Fixture示例代码：
     # one can also access methods available on the User class
     email(david.girlfriend.email, david.location_tonight)
 
+### 为测试配置环境变量
+
+    # test/controllers/welcome_controller_test.rb
+    class WelcomeControllerTest < ActionDispatch::IntegrationTest
+      def setup
+        @base_tile = 'SEO Optimized Website'
+      end
+      ...
+    end
+
 ### 单元测试
 
 注：针对Model的单元测试。默认使用内置的minitest。
@@ -1877,6 +2238,16 @@ Fixture示例代码：
 理论上，单元测试应覆盖所有可能出错的地方。实践上，对于Model中的每一个校验和每一个方法，都至少应该编写一个测试。
 
 ### 断言
+
+参考资料：[RubyGuides > A Guide to Testing Rails Applications > Available Assertions](http://guides.rubyonrails.org/testing.html#available-assertions)
+
+示例代码：
+
+判断页面标题：
+
+    assert_select 'title', 'The Page Title'
+
+即要求存在`<title>The Page Title</title>`标签。
 
 断言的作用是确保程序按照设计正确运行。Minitest提供了多种类型的断言：
 
@@ -1935,10 +2306,11 @@ Rails测试框架是模块化的，我们可以编写自己的断言。Rails就�
 
 功能测试的目标对象是一个Controller的众多Action。Controller处理Web请求，返回渲染后的View，这一过程的各个环节就早要测试的内容。
 
+`rails g controller ...`命令会生成功能测试代码。这些测试会覆盖控制器的每个动作。
+
 功能测试示例代码：
 
     # test/controllers/articles_controller_test.rb
-
     class ArticlesControllerTest < ActionController::TestCase
       test "should get index" do
         get :index
@@ -2863,13 +3235,20 @@ Heroku使用PostgreSQL数据库：
 
     subl Gemfile
 
+        group :development, :test do
+          gem 'sqlite3'
+        end
+
+        group :test do
+          gem 'minitest-reporters'
+          gem 'mini_backtrace'
+          gem 'guard'
+          gem 'guard-minitest'
+        end
+
         group :production do
           gem 'pg'
           gem 'rails_12factor'
-        end
-
-        group :development, :test do
-          gem 'sqlite3'
         end
 
     bundle --without production
@@ -2877,6 +3256,8 @@ Heroku使用PostgreSQL数据库：
     git commit -a -m 'Update Gemfile.lock for Heroku.'
 
 其中`pg`gem提供PostgreSQL数据库支持；`rails_12factor`gem提供asset支持(也就是可以访问CSS、JS、图片等静态文件)；`--without production`选项使`bundle`不会把生产环境的gem安装到本地(如`pg`和`rails_12factor`)。
+
+注：如果缺少了`gem 'guard'`这一行，在运行`rails test`时就遇到`LoadError: cannot load such file -- guard`错误。可参考[Minitest Issues Ruby on Rails](http://stackoverflow.com/questions/28685584/minitest-issues-ruby-on-rails)。
 
 如果系统中已经安装了Heroku命令行客户端：
 
@@ -2917,7 +3298,14 @@ Heroku使用PostgreSQL数据库：
 
     firefox https://powerful-brook-32947.herokuapp.com/
 
-注：在本地也可以使用`heroku open`打开Heroku上的Rails应用程序。
+注：
+
+1. 在本地可以使用`heroku open`打开Heroku上的Rails应用程序。
+2. 之后可以用`git push heroku`完成代码推送。
+
+在Heroku上应用数据库迁移(migrations)：
+
+    heroku run rails db:migrate
 
 为应用程序指定二级域名：
 
@@ -2982,6 +3370,10 @@ Heroku使用PostgreSQL数据库：
           status         #  status of the Heroku platform
           update         #  update the heroku client
           version        #  display version
+
+查看生产环境日志(用于错误调试)：
+
+    heroku logs
 
 
 ## 项目实例
