@@ -3341,7 +3341,7 @@ subl app/models/order.rb
 * [jQuery AJAX HTML5 Datalist Autocomplete Example](http://www.sitepoint.com/jquery-ajax-html5-datalist-autocomplete/ "Google关键字：datalist autocomplete ajax coffeescript")
 
 
-## 手动用户认证
+## 手工实现用户认证功能(Authentication)
 
 功能设计：
 
@@ -3359,16 +3359,230 @@ subl app/models/order.rb
 | name  | string  |
 | email | string  |
 
-相关代码：
+gem相关代码：
 
-    rails g controller Users new
+    subl Gemfile
 
-    rails g model User name:string email:string
+        ...
+        gem 'bcrypt', '3.1.11'
+
+    bundle
+
+URL路由相关代码：
+
+    subl config/routest.rb
+
+        get 'signup' => 'users#new'
+        resources :users
+
+视图相关代码：
+
+    subl app/views/layouts/application.html.erb
+
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title><%= full_title yield(:title) %></title>
+            <%= csrf_meta_tags %>
+
+            <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+            <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+            <!--[if lt IE 9]>
+              <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">
+              </script>
+            <![endif]-->
+          </head>
+          <body>
+            <div class="container">
+              <%= render 'layouts/header' %>
+            </div>
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-12">
+                  <%= render 'layouts/flash' %>
+                  <%= yield %>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <p><%= debug(params) if Rails.env.development? %></p>
+                </div>
+              </div>
+            </div>
+          </body>
+        </html>
+
+    subl app/views/layouts/_header.html.erb
+
+        <nav class="navbar navbar-inverse">
+          <%= link_to 'Sample App', root_path, id: 'logo', class: 'navbar-brand' %>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item">
+              <%= link_to 'Home', root_path, class: 'nav-link' %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Help', help_path, class: 'nav-link' %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Log in', signup_path, class: 'nav-link' %>
+            </li>
+          </ul>
+        </nav>
+
+    subl app/views/layouts/_flash.html.erb
+
+        <% flash.each do |message_type, message| %>
+          <div class="alert alert-<%= message_type %>"><%= message %></div>
+        <% end %>
+
+    subl app/views/shared/_error_messages.html.erb
+
+        <% if @user.errors.any? %>
+          <div class="error-explanation">
+            <div class="alert alert-danger" role="alert">
+              The form contains <%= pluralize(@user.errors.count, 'error') %>
+            </div>
+            <ul>
+            <% @user.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+    subl app/views/users/new.html.erb
+
+        <% provide :title, 'Sign up' %>
+        <h1>Sign up</h1>
+        <div class="row">
+          <div class="col-sm-6 col-sm-offset-3">
+            <%= form_for(@user) do |f| %>
+              <%= render 'shared/error_messages' %>
+              <fieldset class="form-group">
+                <%= f.label :name %>
+                <%= f.text_field :name, class: 'form-control' %>
+              </fieldset>
+              <fieldset class="form-group">
+                <%= f.label :email %>
+                <%= f.email_field :email, class: 'form-control' %>
+              </fieldset>
+              <fieldset class="form-group">
+                <%= f.label :password %>
+                <%= f.password_field :password, class: 'form-control' %>
+              </fieldset>
+              <fieldset class="form-group">
+                <%= f.label :password_confirmation, 'Confirmation' %>
+                <%= f.password_field :password_confirmation, class: 'form-control' %>
+              </fieldset>
+              <%= f.submit 'Create account', class: 'btn btn-primary' %>
+            <% end %>
+          </div>
+        </div>
+
+    subl app/ivew/users/show.html.erb
+
+        <% provide :title, @user.name %>
+        <div class="row">
+          <aside class="col-sm-4">
+            <section class="user_info">
+              <h1>
+                <%= gravatar_for @user %>
+                <%= @user.name %>
+              </h1>
+            </section>
+          </aside>
+        </div>
+
+模型相关代码：
+
+    rails g model User name:string email:string password_digest:string
     rails db:migrate
 
 注：在生成控制器时使用`Users`，在生成模型时使用`User`。生成的数据表是`users`，对模型类的引用是`User`。
 
     subl app/models/user.rb
+
+        class User < ApplicationRecord
+          before_save {email.downcase!}
+          validates :name, presence: true
+          validates :email, presence: true, length: {maximum: 140}, format: {with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i}, uniqueness: {case_sensitive: false}
+          has_secure_password
+          validates :password, presence: true, length: {minimum: 6}
+        end
+
+控制器相关代码：
+
+    rails g controller Users new create
+
+测试相关代码：
+
+    subl test/models/user_test.rb
+
+        require 'test_helper'
+        class UserTest < ActiveSupport::TestCase
+          def setup
+            @user = User.create(name: 'chinakr', email: 'chinakr@gmail.com', password: 'helloworld', password_confirmation: 'helloworld')
+          end
+          test 'should be valid' do
+            assert @user.valid?
+          end
+          test 'name should not be blank' do
+            @user.name = ''
+            assert_not @user.valid?
+          end
+          test 'email should not be too long' do
+            @user.email = 'a' * 255 + '@example.com'
+            assert_not @user.valid?
+          end
+          test 'email should be unique' do
+            dup_user = @user.dup
+            dup_user.email = dup_user.email.upcase
+            @user.save
+            assert_not dup_user.valid?
+          end
+          test 'password should not be blank' do
+            @user.password = @user.password_confirmation = ' ' * 6
+            assert_not @user.valid?
+          end
+          test 'password should have more than 6 characters' do
+            @user.password = @user.password_confirmation = 'a' * 5
+            assert_not @user.valid?
+          end
+          test 'email should be saved as lower-case' do
+            mixed_case_email = 'WWW@example.Com'
+            @user.email = mixed_case_email
+            @user.save
+            assert_equal mixed_case_email.downcase, @user.reload.email
+          end
+        end
+
+    rails test:models
+
+    rails g integration_test signup
+
+    subl test/integration/signup_test.rb
+
+        require 'test_helper'
+        class SignupTest < ActionDispatch::IntegrationTest
+          test 'invalid signup info' do
+            get signup_path
+            assert_no_difference 'User.count' do
+              post users_path, user: {name: '', email: 'www@example', password: 'password', password_confirmation: 'wrongpassword'}
+              assert_template 'users/new'
+            end
+          end
+          test 'valid signup info' do
+            get signup_path
+            assert_difference 'User.count', 1 do
+              post_via_redirect users_path, user: {name: 'example', email: 'www@example.com', password: 'password', password_confirmation: 'password'}
+            end
+            assert_template 'users/show'
+          end
+        end
+
+    rails test:integration
+
+在控制台进行语法测试代码：
 
     rails c
 
