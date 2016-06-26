@@ -85,6 +85,9 @@
 | silencer                          | 消音器                |
 | CSRF (Cross-Site Request Forgery) | 跨站脚本攻击          |
 | layout                            | 布局文件              |
+| asset                             | 资源                  |
+| pipeline                          | 管道                  |
+| manifest                          | 清单                  |
 
 
 ## 新特性
@@ -167,7 +170,7 @@ rails应用的rails及ruby版本升级实例：
 
 ### Rails控制台(console)
 
-Rails控制台是和Rails应用程序交互的有用工具。
+Rails控制台是和Rails应用程序交互的有用工具。通过控制台，可以方便地查询Rails或Ruby的API，做一些简单的代码测试。
 
 启动控制台：
 
@@ -177,7 +180,13 @@ Rails控制台是和Rails应用程序交互的有用工具。
 
     rails c
 
-使用`exit`或`quit`命令(或`Ctrl + D`快捷键)退出控制台，返回终端。
+使用`exit`或`quit`命令(或`Ctrl + D`快捷键)退出控制台，返回终端。使用`Ctrl + C`中断当前执行。
+
+在沙箱中运行Rails控制台：
+
+    rails c --sandbox
+
+注：沙箱的含义是在退出控制台时，所做修改都会回滚。
 
 以生产环境启动控制台(默认为开发环境)：
 
@@ -191,16 +200,12 @@ Rails控制台是和Rails应用程序交互的有用工具。
     > one_micropost = first_user.microposts.first
     > one_microposts.user
 
-### 关于Asset Pipeline
+配置Rails控制台(基于irb)：
 
-Rails通过`sprockets-rails`这个gem提供了Asset Pipeline功能。Asset Pipeline主要有3个作用：
+    vim ~/.irbrc
 
-  1. 把CSS和JS文件组装为单个文件，这样可以减少Web浏览器的request数量，提高页面加截速度；
-  2. 压缩CSS和JS文件，减小文件体积，提高页面加截速度；
-  3. 使用Sass来编写CSS，使用CoffeScript来编写JavaScript，提高编程效率。
-
-如果不想使用Asset Pipeline，可以使用`rails new appname --skip-sprockets`来新建Rails应用。
-
+        IRB.conf[:PROMPT_MODE] = :SIMPLE
+        IRB.conf[:AUTO_INDENT_MODE] = false
 
 ## Rails开发环境的配置
 
@@ -227,6 +232,24 @@ Rails通过`sprockets-rails`这个gem提供了Asset Pipeline功能。Asset Pipel
     rails new myapp
     cd myapp/
 
+### Rails环境变量
+
+    rails c
+
+        Rails.env    # => "development"
+        Rails.env.development?    # => true
+        Rails.env.production?    # => false
+
+    rails c production
+
+        Rails.env    # => "production"
+        Rails.env.production?    # => true
+
+    heroku run console
+
+        Rails.env    # => "production"
+        Rails.env.production?    # => true
+
 
 ## Rails的基本用法
 
@@ -235,11 +258,16 @@ Rails通过`sprockets-rails`这个gem提供了Asset Pipeline功能。Asset Pipel
     subl Gemfile
     bundle
 
-注：以`bundle exec`为前缀的命令将使用和Gemfile对应的软件版本，如`bundle exec rails db:migrate`，在一些系统上`bundle exec`可省略，即`rails db:migrate`。可以总是省略`bundle exec`，仅在遇到问题时再加上它试一下。
+注：
+
+1. `bundle`是`bundle install`的简写。
+2. 以`bundle exec`为前缀的命令将使用和Gemfile对应的软件版本，如`bundle exec rails db:migrate`，在一些系统上`bundle exec`可省略，即`rails db:migrate`。可以总是省略`bundle exec`，仅在遇到问题时再加上它试一下。
 
 按照`Gemfile`中指定的版本更新已安装的gem：
 
     bundle update
+
+注：如果`bundle install`运行正常，但`rails test`提示找不到某些gem，这时可以试着运行一下`bundle update`。
 
 在本地(开发环境)安装gem，忽略生产环境下需要的gem：
 
@@ -260,6 +288,8 @@ Rails通过`sprockets-rails`这个gem提供了Asset Pipeline功能。Asset Pipel
         puma (3.4.0)
 
 ### Rails命令行基本用法
+
+查看Rails命令行使用帮助：
 
     rails help
 
@@ -377,6 +407,7 @@ Rails通过`sprockets-rails`这个gem提供了Asset Pipeline功能。Asset Pipel
         TestUnit:
           test_unit:generator
           test_unit:plugin
+
 
     rails g controller
 
@@ -893,7 +924,23 @@ Rails通过`sprockets-rails`这个gem提供了Asset Pipeline功能。Asset Pipel
       gem 'spring-watcher-listen', '~> 2.0.0'
     end
 
-### Asset Pipeline的用法
+### 资源管道的用法(Asset Pipeline)
+
+注：asset或可翻译为资源。
+
+Rails通过`sprockets-rails`这个gem提供了资源管道(Asset Pipeline)功能。资源管道主要有3个作用：
+
+1. 把CSS和JS文件分别组装为单个文件(`application.css`和`application.js`)，这样可以减少Web浏览器的请求数量，提高页面加截速度；
+2. 压缩CSS和JS文件(通过删除空白字符)，减小文件体积，提高页面加截速度；
+3. 使用Sass来编写CSS，使用CoffeScript来编写JavaScript，提高编程效率。
+
+这样，在开发环境下可以把CSS、JS代码放在多个文件中以实现良好的逻辑结构，并通过缩进和空格实现良好的代码风格，从面得到良好的编程体验；在生产环境下，又可以得到数量最少、体积最小的CSS和JS文件，从而得到高性能；可谓两全其美的解决方案。
+
+注：Sass 3.0开始使用Scss语法，Scss语法向下兼容CSS语法。
+
+如果不想使用资源管道，可以使用`rails new appname --skip-sprockets`来新建Rails应用。
+
+使用资源管道需要搞清楚三个问题：1) 资源目录(assets)；2) 清单文件(manifest)；3) 预处理引擎。
 
 一、文件存放位置
 
@@ -916,38 +963,52 @@ Rails通过`sprockets-rails`这个gem提供了Asset Pipeline功能。Asset Pipel
 关于文件存放位置的更多选择：
 
   * `app/assets/`：用于存放应用自己的CSS、JS和图片文件。
-  * `lib/assets/`：用于存放跨应用的CSS、JS和图片文件。
+  * `lib/assets/`：用于存放跨应用的CSS、JS和图片文件(库)。
   * `vendor/assets/`：用于存放第三方提供的文件，如CSS框架和JavaScript插件。
 
-二、文件的引用
+二、清单文件(manifest)
+
+Rails按照清单文件，把资源目录下的CSS和JS文件分别组装成单个文件。
+
+应用的清单文件包括：
+
+    app/assets/stylesheets/application.css
+    app/assets/javascripts/application.js
+
+CSS的清单文件：
+
+    subl app/assets/stylesheets/application.css
+
+        /*
+         *
+         *= require_tree .
+         *= require_self
+        */
+
+其中`require_tree .`的作用是把`app/assets/stylesheets/`目录及其子目录下的所有CSS文件包含到应用程序CSS文件中。`require_self`的作用是把`application.css`文件自己包含到应用程序CSS文件中。
+
+三、对资源文件的引用(asset)
 
 官方文档给出的例子：
-
 
     app/assets/javascripts/home.js
     lib/assets/javascripts/moovinator.js
     vendor/assets/javascripts/slider.js
     app/assets/javascripts/sub/something.js
 
-
 对上述文件，都可以通过下面的方法来引用
-
 
     //= require home
     //= require moovinator
     //= require slider
     //= require sub/something
 
-
 同时还要加上
-
 
     <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
 
-
 对图片的引用：
-
 
     public/assets/images/rails.png
     public/assets/images/icons/favicon.png
@@ -955,26 +1016,25 @@ Rails通过`sprockets-rails`这个gem提供了Asset Pipeline功能。Asset Pipel
     <%= image_tag "rails.png" %>
     <%= image_tag "icons/favicon.png" %>
 
-
 以下均为在erb文件中引用CSS、JS和图片文件。
 
 在CSS中引用图片：
 
-
     .class { background-image: url(<%= asset_path 'image.png' %>) }
-
 
 在JS中引用图片：
 
-
     $('#logo').attr({ src: "<%= asset_path('logo.png') %>" });
 
+四、预处理引擎(preprocessing engines)
 
-三、生产环境下的部署
+在Rails按照清单文件把资源文件(CSS、JS)分别组装成单个文件之前，会使用预处理引擎对这些资源文件进行预处理。Rails会根据资源文件的后缀选用合适的预处理引擎。例如`*.scss`的CSS文件，`*.coffee`的JS文件，`*.erb`的模板文件。
 
+对于复杂后缀的资源文件，Rails会按照后缀从右到左的顺序依次调用合适的预处理引擎，例如对`mycontroller.js.erb.coffee`会依次调用CoffeeScript和ERb预处理引擎。
+
+五、生产环境下的部署
 
     RAILS_ENV=production rails assets:precompile
-
 
 ### 新建Rails应用
 
@@ -1293,7 +1353,18 @@ Rails通过`sprockets-rails`这个gem提供了Asset Pipeline功能。Asset Pipel
 
 ### 应用数据迁移(migrations)
 
+在开发环境下应用数据迁移
+
     rails db:migrate
+
+注：
+
+1. 本地默认为开发环境，但Heroku默认为生产环境，这一点需要注意。
+2. 生成的数据迁移文件位于`db/migrate/`目录下，文件名以时间戳开头，这种命名方式可以避免多人协同开发时出现文件名冲突。
+
+在生产环境下应用数据迁移：
+
+    RAILS_ENV=production rails db:migrate
 
 ### 撤销数据迁移(migrations)
 
@@ -1305,7 +1376,17 @@ Rails通过`sprockets-rails`这个gem提供了Asset Pipeline功能。Asset Pipel
 
     rails db:rollback VERSION=0
 
+注：对于可逆的数据库操作，数据迁移只需定义`change`方法；但对于不可逆的数据库操作，数据迁移需分别定义`up`和`down`方法。
+
+### 清空数据库(reset)
+
+示例代码：
+
+    rails db:migrate:reset
+
 ### 查看URL路由
+
+Rails采用RESTful风格的路由机制。例如在`config/routes.rb`中定义`resources :users`时，对模型对象`User`的创建(create)、查看(show)、修改(update)、删除(destroy)操作将对应于HTTP的POST、GET、PATCH、DELETE操作，对应的URL如`/users`、`/users/1`、`/users/1`、`/users/1`。
 
 HTTP基本操作-四种请求类型：
 
@@ -1388,6 +1469,20 @@ HTTP基本操作-四种请求类型：
             end
           end
 
+### 命名路径(named routes)
+
+路由定义、命名路径和URL的对应关系：
+
+* `root 'welcome#home'` -> `root_path` -> `/`
+    + `root_url` -> `http://www.example.com/`
+* `get 'about' => 'welcome#about'` -> `about_path` -> `/about`
+    + `about_url` -> `http://www.example.com/about`
+* `get 'welcome#hello'` -> `welcome_hello_path` -> `/welcome/hello`
+
+命名路径的使用：
+
+    <%= link_to 'About', about_path %>
+
 ### 页面跳转
 
 参考资料：[ActionController::Redirecting](http://api.rubyonrails.org/classes/ActionController/Redirecting.html)
@@ -1421,6 +1516,20 @@ HTTP基本操作-四种请求类型：
         before_action :set_order, only: [:welcome]
 
         format.html { redirect_to action: 'welcome', id: @order }
+
+在控制器中实现页面跳转：
+
+    # app/controllers/users_controllers.rb
+    def create
+      @user = User.new(users_params)
+      if @user.save
+        redirect_to @user
+      else
+        render 'new'
+      end
+    end
+
+其中`redirect_to @user`等价于`redirect_to user_url(@user)`。
 
 ### 插入测试数据
 
@@ -1463,93 +1572,6 @@ HTTP基本操作-四种请求类型：
 
     render html: '<p>Hello world!</p>'
 
-### erb模板文件
-
-设置网站标题：
-
-    <title><%= title ||= 'Site Name' %></title>
-
-最基本的表单：
-
-    <%= form_tag do %>
-      Form contents
-    <% end %>
-
-生成的HTML为
-
-    <form accept-charset="UTF-8" action="/" method="post">
-      <input name="utf8" type="hidden" value="&#x2713;" />
-      <input name="authenticity_token" type="hidden" value="J7CBxfHalt49OSHp27hblqK20c9PgwJ108nDHX/8Cts=" />
-      Form contents
-    </form>
-
-通用的搜索表单：
-
-    <%= form_tag("/search", method: "get") do %>
-      <%= label_tag(:q, "Search for:") %>
-      <%= text_field_tag(:q) %>
-      <%= submit_tag("Search") %>
-    <% end %>
-
-生成的HTML为
-
-    <form accept-charset="UTF-8" action="/search" method="get">
-      <input name="utf8" type="hidden" value="&#x2713;" />
-      <label for="q">Search for:</label>
-      <input id="q" name="q" type="text" />
-      <input name="commit" type="submit" value="Search" />
-    </form>
-
-使用表单的例子：
-
-    subl app/views/orders/new.html.erb
-
-        <%= render 'form', order: @order %>
-
-    subl app/views/orders/_form.html.erb
-
-        <%= form_for(order) do |f| %>
-          <% if order.errors.any? %>
-            <div id="error_explanation">
-              <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
-              <ul>
-              <% order.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-              <% end %>
-              </ul>
-            </div>
-          <% end %>
-          <div class="field">
-            <%= f.label :datetime %>
-            <%= f.datetime_select :datetime %>
-          </div>
-          <div class="field">
-            <%= f.label :name %>
-            <%= f.text_field :name %>
-          </div>
-          <div class="actions">
-            <%= f.submit %>
-          </div>
-        <% end %>
-
-### 在erb中引用URL
-
-参考资料：[Rails Routing from the Outside In](http://guides.rubyonrails.org/routing.html#generating-paths-and-urls-from-code)
-
-对于路由`resources :photos`：
-
-  * `photos_path`：返回`/photos`。
-  * `new_photo_path`：返回`/photos/new`。
-  * `edit_photo_path(:id)`：返回`/photos/:id/edit`，例如`edit_photo_path(10)`返回`/photos/10/edit`。
-  * `photo_path(:id)`：返回`/photos/:id`， 例如`photo_path(10)`返回`/photos/10`。
-
-注：`photos_path`返回路径，`photos_url`返回URL，后者除了路径，还包括了域名，例如`https://www.example.com/photos`。
-
-使用示例：
-
-
-    <%= link_to '订单', orders_path %>
-
 ### 启动Web服务器
 
 启动Web服务器：
@@ -1561,6 +1583,14 @@ HTTP基本操作-四种请求类型：
 重启Web服务器：
 
     rails restart
+
+在生产环境下启动Web服务器：
+
+    rails s --environment production
+
+或
+
+    RAILS_ENV=production rails s
 
 ### 把提示信息改为中文
 
@@ -1784,7 +1814,190 @@ Public i18n API最重要的两个方法是`translate`和`localize`，前者用�
         <li>IP：<%= @order.ip %></li>
 
 
-## Model(模型)
+## 模型(Model)
+
+### 模型的基本操作
+
+添加记录：
+
+    user = User.new(name: 'chinakr', email: 'chinakr@gmail.com')
+    user.valid?
+    user.save
+
+或
+
+    user = User.create(name: 'chinakr', email: 'chinakr@gmail.com')
+
+注：如果保存失败，`user.save`会返回`false`。
+
+查询记录：
+
+    user = User.find(1)
+    user.name
+    user.email
+    user.updated_at
+
+或
+
+    user = User.find_by(email: 'chinakr@gmail.com')
+
+注：
+
+1. 其中`1`是某条记录的id。
+2. 如果相关记录不存在，会抛出一个`ActiveRecord::RecordNotFound`异常。
+
+获得第一条记录：
+
+    user = User.first
+
+获得完整的记录列表：
+
+    users = User.all
+
+获得记录的总条数：
+
+    total = User.count
+
+修改记录(更新记录)：
+
+    user = User.find(1)
+    user.name = Ye
+    user.save
+
+或
+
+    user = User.find(1)
+    user.update_attribute(name: 'Ye')
+
+或
+
+    user = User.find(1)
+    user.update_attributes(name: 'Ye', email: 'chinakr@hotmail.com')
+
+注：`update_attributes`可以同时更新记录的多个属性。
+
+删除记录：
+
+    user = User.find(1)
+    user.destroy
+
+复制记录：
+
+    dup_user = user.dup
+
+查看错误信息：
+
+    user.errors.full_messages
+
+### 为用户模型增加加密密码
+
+示例代码：
+
+    # app/models/user.rb
+    class User < ActiveRecord
+      ...
+      has_secure_password
+    end
+
+`has_secure_password`方法完成的工作：
+
+1. 把加密后的密码`password_digest`保存到数据库；
+2. 强制校验`password`和`password_confirmation`属性；
+3. 增加了`authenticate`方法，当输入密码正确时返回`ture`，错误时返回`false`。
+
+要使用`has_secure_password`方法，用户表必须具有`password_digest`字段，即：
+
+    rails g model User name:string email:string password_digest:string
+    rails db:migrate
+
+或
+
+    rails g model User name:string email:string
+    rails db:migrate
+    ...
+    rails g migration add_password_digest_to_users password_digest:string
+    rails db:migrate
+
+还需要安装`bcrypt`这个gem用于密码加密：
+
+    subl Gemfile
+
+        gem 'bcrypt'
+
+    bundle
+
+校验密码：1) 不能为空；2) 不能少于6个字符。
+
+    # app/models/user.rb
+    class User < ActiveRecord
+      ...
+      has_secure_password
+      validates :password, presence: true, length: {minimum: 6}
+    end
+
+相关测试代码：
+
+    # test/models/user_test.rb
+    require 'test_helper'
+    class UserTest < ActiveSupport::TestCase
+      def setup
+        @user = User.create(name: 'chinakr', email: 'chinakr@gmail.com', password: 'helloworld', password_confirmation: 'helloworld')
+      end
+      test 'should be valid' do
+        assert @user.valid?
+      end
+      test 'password should not be blank' do
+        @user.password = @user.password_confirmation = ' ' * 6
+        assert_not @user.valid?
+      end
+      test 'password should have more than 6 characters' do
+        @user.password = @user.password_confirmation = 'a' * 5
+        assert_not @user.valid?
+      end
+     end
+
+在终端添加一个用户：
+
+    rails c
+
+        User.create(name: 'chinakr', email: 'chinakr@gmail.com', password: 'helloworld', password_confirmation: 'helloworld')
+
+在终端删除一个用户：
+
+    rails c
+
+        user = User.find_by(name: 'chinakr')
+        user.destroy
+
+在终端验证用户密码：
+
+    rails c
+
+        user = User.find_by(name: 'chinakr')
+        user.authenticate('wrongpassword')    # => false
+        user.authenticate('helloworld')    # 返回`user`对象，在判断语句中相当于布尔值`true`
+
+### SQLite数据库浏览器
+
+[DB Browser for SQLite官网](http://sqlitebrowser.org)：可打开本地SQLite 3数据库文件。
+
+DB Browser for SQLite是一个高质量、可视化、开源的工具，可以创建、设计、编辑SQLite数据库文件。操作对象包括数据库文件、数据表、索引、记录，还支持数据导入导出(`text`、`csv`和`sql`)、SQL语句执行和日志。
+
+DB Browser不能代替SQLite命令行工具。
+
+在macOS上可以用Homebrew安装DB Browser：
+
+    brew cask install sqlitebrowser
+
+### 控制器中模型相关的常用操作
+
+获得全部象列表：
+
+    @users = User.all
+
+根据ID获得指定对象：
+
+    @user = User.find(parmas[:id])
 
 ### 确保字段不为空
 
@@ -1798,20 +2011,90 @@ Public i18n API最重要的两个方法是`translate`和`localize`，前者用�
 
     validates :content, uniqueness: true, presence: true    # 同时应用多个约束条件
 
-### 确保字段值的唯一性
+对应的测试代码：
+
+    # test/models/user_test.rb
+    require 'test_helper'
+    class UserTest < ActiveSupport::TestCase
+      def setup
+        @user = User.create(name: 'chinakr', email: 'chinakr@gmail.com')
+      end
+      test 'should be valid' do
+        assert @user.valid?
+      end
+      test 'name should not be blank' do
+        @user.name = ''
+        assert_not @user.valid?
+      end
+    end
+
+### 确保字段值的唯一性(校验和索引)
 
 参考资料：Rails Guides > Active Record Validations > 2.11 uniqueness
 
-示例代码：
+示例代码一：
 
     class Account < ActiveRecord::Base
       validates :email, uniqueness: true
     end
 
+示例代码二：
+
+    class Account < ActiveRecord::Base
+      validates :email, uniqueness: {case_sensitive: false}
+    end
+
+注：唯一性校验默认是大小写敏感的，可通过`case_sensitive: false`设置为大小写不敏感。
+
+需要注意的是，为避免用户连续提交表单，导致多条相同的记录在保存至数据库之前已通过校验，有必要在模型层面之外，也就是数据库层面设置唯一性校验，即为具有唯一值的字段加上索引。
+
+在数据库层面为字段加上索引：
+
+    rails g migration add_index_to_users_email
+    rails db:migrate
+
+注：如果`rails db:migrate`失败，可以`ps -aux | grep console`，然后`kill -9 <pid>`。这样做是为了杀死`rails c --sandbox`进程，因为这个进程会锁定数据库，导致数据迁移失败。
+
 ### 设置字段的最大长度
 
+示例代码：
+
     class Micropost < ApplicationRecord
-      validates :content, length: { maximum: 140 }
+      validates :content, length: {maximum: 256}
+    end
+
+对应的测试代码：
+
+    # test/models/user_test.rb
+    require 'test_helper'
+    class UserTest < ActiveSupport::TestCase
+      def setup
+        @user = User.create(name: 'chinakr', email: 'chinakr@gmail.com')
+      end
+      test 'email should not be too long' do
+        @user.email = 'a' * 255 + '@example.com'
+        assert_not @user.valid?
+      end
+    end
+
+### 校验字符串的格式
+
+应用场景：网址、电子邮箱、手机号等。
+
+示例代码：
+
+    class Account < ActiveRecord::Base
+      validates :email, format: {with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i}
+    end
+
+其中`\A`匹配字符串开头，`\z`匹配字符串结尾。
+
+### 为多个字段设置多个校验条件
+
+示例代码：
+
+    class Person < ActiveRecord::Base
+      validates :name, :login, :email, presence: true, length: {maximun: 256}
     end
 
 ### 模型的一对多关系
@@ -1825,6 +2108,43 @@ Public i18n API最重要的两个方法是`translate`和`localize`，前者用�
     class Micropost < ApplicationRecord
       belongs_to :user
     end
+
+### `befor_save`回调方法
+
+示例代码-保存记录前把邮件统一改为小写：
+
+    class User < ActiveRecord::Base
+      before_save { self.email = email.downcase }
+      ...
+    end
+
+或
+
+    class User < ActiveRecord::Base
+      before_save { email.downcase! }
+      ...
+    end
+
+注：`email.downcase`本应写作`self.email.downcase`，但在模型中，`=`右侧的`self`可以省略。
+
+相关测试代码：
+
+    require 'test_helper'
+    class UserTest < ActiveSupport::TestCase
+      def setup
+        @user = User.create(name: 'chinakr', email: 'chinakr@gmail.com', password: 'helloworld', password_confirmation: 'helloworld')
+      end
+      test 'should be valid' do
+        assert @user.valid?
+      end
+      test 'email should be saved as lower-case' do
+        mixed_case_email = 'WWW@example.Com'
+        @user.email = mixed_case_email
+        @user.save
+        assert_equal mixed_case_email.downcase, @user.reload.email
+      end
+    end
+
 
 ### 选取指定字段
 
@@ -1852,7 +2172,198 @@ Public i18n API最重要的两个方法是`translate`和`localize`，前者用�
 
 ## View(视图)
 
-略。
+### ERb模板文件
+
+示例代码-语法：
+
+    # app/views/users/index.html.erb
+    <ul>
+    <% @users.each do |user| %>
+      <li><%= user.name %></li>
+    <% end %>
+    </ul>
+
+如上所示，`<% ... %>`和`<%= ... %>`是ERb的两个基本用法，前者针对命令，无输出，后者针对表达式，有输出。
+
+示例代码-设置网站标题：
+
+    <title><%= title ||= 'Site Name' %></title>
+
+### 表单操作(form)
+
+一、最基本的表单(`form_tag`)：
+
+    <%= form_tag do %>
+      Form contents
+    <% end %>
+
+生成的HTML为
+
+    <form accept-charset="UTF-8" action="/" method="post">
+      <input name="utf8" type="hidden" value="&#x2713;" />
+      <input name="authenticity_token" type="hidden" value="J7CBxfHalt49OSHp27hblqK20c9PgwJ108nDHX/8Cts=" />
+      Form contents
+    </form>
+
+二、通用的搜索表单(`form_tag`)：
+
+    <%= form_tag("/search", method: "get") do %>
+      <%= label_tag(:q, "Search for:") %>
+      <%= text_field_tag(:q) %>
+      <%= submit_tag("Search") %>
+    <% end %>
+
+生成的HTML为
+
+    <form accept-charset="UTF-8" action="/search" method="get">
+      <input name="utf8" type="hidden" value="&#x2713;" />
+      <label for="q">Search for:</label>
+      <input id="q" name="q" type="text" />
+      <input name="commit" type="submit" value="Search" />
+    </form>
+
+三、使用表单的例子(`form_for`)：
+
+    subl app/views/orders/new.html.erb
+
+        <%= render 'form', order: @order %>
+
+    subl app/views/orders/_form.html.erb
+
+        <%= form_for(order) do |f| %>
+          <% if order.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
+              <ul>
+              <% order.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <div class="field">
+            <%= f.label :datetime %>
+            <%= f.datetime_select :datetime %>
+          </div>
+          <div class="field">
+            <%= f.label :name %>
+            <%= f.text_field :name %>
+          </div>
+          <div class="actions">
+            <%= f.submit %>
+          </div>
+        <% end %>
+
+四、应用了Bootstrap的用户注册表单
+
+    <h1>Sign up</h1>
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+        <%= form_for(@user) do |f| %>
+          <fieldset class="form-group">
+            <%= f.label :name %>
+            <%= f.text_field :name, class: 'form-control' %>
+          </fieldset>
+          <fieldset class="form-group">
+            <%= f.label :email %>
+            <%= f.email_field :email, class: 'form-control' %>
+          </fieldset>
+          <fieldset class="form-group">
+            <%= f.label :password %>
+            <%= f.password_field :password, class: 'form-control' %>
+          </fieldset>
+          <fieldset class="form-group">
+            <%= f.label :password_confirmation, 'Confirmation' %>
+            <%= f.password_field :password_confirmation, class: 'form-control' %>
+          </fieldset>
+          <%= f.submit 'Create account', class: 'btn btn-primary' %>
+        <% end %>
+      </div>
+    </div>
+
+生成的HTML代码为：
+
+    <h1>Sign up</h1>
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+        <form class="new_user" id="new_user" action="/users" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="zdnaHvMgdbsamFdTMa4PLvuvJO+Z8q2t4FsF+E85Kx0pJKdu7NTTHWOeohVtM9DuN91bo9vcslGrtDMUY56YHQ==" />
+          <fieldset class="form-group">
+            <label for="user_name">Name</label>
+            <input class="form-control" type="text" name="user[name]" id="user_name" />
+          </fieldset>
+          <fieldset class="form-group">
+            <label for="user_email">Email</label>
+            <input class="form-control" type="email" name="user[email]" id="user_email" />
+          </fieldset>
+          <fieldset class="form-group">
+            <label for="user_password">Password</label>
+            <input class="form-control" type="password" name="user[password]" id="user_password" />
+          </fieldset>
+          <fieldset class="form-group">
+            <label for="user_password_confirmation">Confirmation</label>
+            <input class="form-control" type="password" name="user[password_confirmation]" id="user_password_confirmation" />
+          </fieldset>
+          <input type="submit" name="commit" value="Create account" class="btn btn-primary" data-disable-with="Create account" />
+        </form>
+      </div>
+    </div>
+
+### 显示错误信息
+
+    # app/views/users/new.html.erb
+    <%= form_for(@user) do |f| %>
+      <%= render 'shared/error_messages' %>
+      ...
+    <% end %>
+
+    mkdir -p app/views/shared/
+
+    # app/views/shared/_error_messages.html.erb
+    <% if @user.errors.any? %>
+      <div class="error-explanation">
+        <div class="alert alert-danger" role="alert">
+          The form contains <%= pluralize(@user.errors.count, 'error') %>
+        </div>
+        <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+注：
+
+1. `if @user.errors.any?`也可以换成`if @user.errors.empty?`；
+2. `pluralize`helper方法用于生成`error`的正确的单复数形式。
+
+`pluralize`helper方法的用法：
+
+    rails c
+
+        include ActionView::Helpers::TextHelper
+        pluralize(1, 'error')    # => "1 error"
+        pluralize(3, 'error')    # => "3 errors"
+        pluralize(1, 'person')    # => "1 person"
+        pluralize(3, 'person')    # => "3 people"
+
+### 在erb中引用URL
+
+参考资料：[Rails Routing from the Outside In](http://guides.rubyonrails.org/routing.html#generating-paths-and-urls-from-code)
+
+对于路由`resources :photos`：
+
+  * `photos_path`：返回`/photos`。
+  * `new_photo_path`：返回`/photos/new`。
+  * `edit_photo_path(:id)`：返回`/photos/:id/edit`，例如`edit_photo_path(10)`返回`/photos/10/edit`。
+  * `photo_path(:id)`：返回`/photos/:id`， 例如`photo_path(10)`返回`/photos/10`。
+
+注：`photos_path`返回路径，`photos_url`返回URL，后者除了路径，还包括了域名，例如`https://www.example.com/photos`。
+
+使用示例：
+
+
+    <%= link_to '订单', orders_path %>
 
 ### 布局文件
 
@@ -1895,10 +2406,246 @@ Public i18n API最重要的两个方法是`translate`和`localize`，前者用�
 
 参考资料：`Foundation笔记 > 布局文件`
 
+### 使用片断(partial)
+
+通过片断(partial)可以消除视图中的重复代码，同时也使视图代码更清晰。
+
+示例代码：
+
+    subl app/views/layouts/application.html.erb
+
+        <%= render 'layouts/header' %>
+
+    subl app/views/layouts/_header.html.erb
+
+### 使用helper
+
+在Rails中定义了大量helper，使用起来非常方便。
+
+生成超链接的helper：
+
+    <%= link_to 'Baidu', 'https://www.baidu.com/' %>
+    <%= link_to image_tag('baidu.gif', alt: 'Baidu'), 'https://www.baidu.com/' %>
+    <%= link_to 'Submit', '#', class: 'button' %>
+
+以上分别为文本超链接、图片超链接和按钮。图片文件位于`app/assets/images/`目录下。
+
+支持无限参数的helper：
+
+    <%= link_to 'Baidu', 'https://www.baidu.com/', id: 'search-engine', class: 'main' %>
+
+实际上是以散列表为helper的最后一个参数，`{}`省略后看起来就像支持无限参数一样，实际上也实现了这样的效果。
+
+### 自定义helper
+
+helper是在Rails中使用的内置函数，自定义helper是自定义的Rails函数，它们都可以在视图中使用。自定义helper位于`app/helpers/`目录下，也是应用程序代码的一部分。
+
+    # app/helper/application_helper.rb
+    module ApplicationHelper
+      # Return full title of a page
+      def full_title(page_title='')
+        base_title = 'Ruby on Rails Tutorial Sample App'
+        if page_title.empty?
+          base_title
+        else
+          page_title + '|' + base_title
+        end
+      end
+    end
+
+    # app/views/layouts/applicatio.html.erb
+    <title><%= full_title yield(:title) %></title>
+
+### 自定义Helper-显示Gravatar头像
+
+参考资料：
+
+* [Ruby on Rails Tutorial > Chapter 7 Sign up > 7.1.4 A Gravatar image and a sidebar](https://www.railstutorial.org/book/sign_up#sec-a_gravatar_image)
+
+Gravatar是一个免费的互联网产品，为用户提供头像上传和展示服务。
+
+示例代码：
+
+    # app/helpers/users_helper.rb
+    module UsersHelper
+      def gravatar_for(user)
+        gravatar_id = Digest::MD5::hexdigest(user.email.downcase)
+        gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}"
+        image_tag(gravatar_url, alt: user.name, class: 'gravatar')
+      end
+    end
+
+    # app/views/users/show.html.erb
+    <h1>
+      <%= gravatar_for @user %>
+      <%= @user.name %>
+    </h1>
+
+
+### 在试图中显示调试信息
+
+示例代码：
+
+    # app/views/layouts/application.html.erb
+    <!DOCTYPE html>
+    <html>
+      ...
+      <body>
+        ...
+        <%= render 'layouts/footer' %>
+        <%= debug(params) if Rails.env.development? %>
+      </body>
+    </html>
+
+其中`debug(params)`用于在页面上显示当前的`params`，`if Rails.env.development?`确保调试信息仅在开发模式下显示。
 
 ## Controller(控制器)
 
-略。
+### 使用强制参数(strong parameters)
+
+参考资料：[Action Controller Overview > 4.5 Strong Parameters](http://edgeguides.rubyonrails.org/action_controller_overview.html#strong-parameters)
+
+示例代码：
+
+    # app/controllers/users_controller.rb
+    class UsersController < ApplicationController
+      def show
+        @user = User.find(params[:id])
+        #debugger
+      end
+      def create
+        @user = User.new(user_params)
+        if @user.save
+          redirect_to @user
+        else
+          render 'new'
+        end
+      end
+      private
+        def user_params
+          params.require(:user).permit(:name, :email, :password, :password_confirmation)
+        end
+    end
+
+也就是说在Rails中，通过GET方式提交的参数不需要使用强制参数，通过POST方式提交的参数必须使用强制参数。
+
+### 使用`byebug`提高调试效率
+
+参考资料：
+
+* [Ruby on Rails Tutorial > Chapter 7 Sign up > 7.1.3 Debugger](https://www.railstutorial.org/book/sign_up#sec-debugger)
+
+示例代码：
+
+    # Rails 5中默认启用
+    subl Gemfile
+
+        group :development, :test do
+          # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+          gem 'byebug', platform: :mri
+        end
+
+    # app/controllers/users_controller.rb
+    def show
+      @user = User.find(params[:id])
+      debugger
+    end
+
+这样当访问`/users/show/123`页面时，Web服务器就会停止输出并进入`(byebug)`交互模式。
+
+此时可以直接输入变量名以查看其值：
+
+    (byebug) @user.name
+    "chinakr"
+    (byebug) @user.email
+    "chinakr@gmail.com"
+    (byebug) user_params[:id]
+    "2"
+
+输入`continue`可以继续输出页面。输入`quit`可以使Web服务器停止运行。
+
+输入`help`可以查看byebug的其他使用方法：
+
+    (byebug) help
+
+      break      -- Sets breakpoints in the source code
+      catch      -- Handles exception catchpoints
+      condition  -- Sets conditions on breakpoints
+      continue   -- Runs until program ends, hits a breakpoint or reaches a line
+      debug      -- Spawns a subdebugger
+      delete     -- Deletes breakpoints
+      disable    -- Disables breakpoints or displays
+      display    -- Evaluates expressions every time the debugger stops
+      down       -- Moves to a lower frame in the stack trace
+      edit       -- Edits source files
+      enable     -- Enables breakpoints or displays
+      finish     -- Runs the program until frame returns
+      frame      -- Moves to a frame in the call stack
+      help       -- Helps you using byebug
+      history    -- Shows byebug's history of commands
+      info       -- Shows several informations about the program being debugged
+      interrupt  -- Interrupts the program
+      irb        -- Starts an IRB session
+      kill       -- Sends a signal to the current process
+      list       -- Lists lines of source code
+      method     -- Shows methods of an object, class or module
+      next       -- Runs one or more lines of code
+      pry        -- Starts a Pry session
+      quit       -- Exits byebug
+      restart    -- Restarts the debugged program
+      save       -- Saves current byebug session to a file
+      set        -- Modifies byebug settings
+      show       -- Shows byebug settings
+      source     -- Restores a previously saved byebug session
+      step       -- Steps into blocks or methods one or more times
+      thread     -- Commands to manipulate threads
+      tracevar   -- Enables tracing of a global variable
+      undisplay  -- Stops displaying all or some expressions when program stops
+      untracevar -- Stops tracing a global variable
+      up         -- Moves to a higher frame in the stack trace
+      var        -- Shows variables and its values
+      where      -- Displays the backtrace
+
+### 显示临时信息(flash)
+
+示例代码：
+
+    # app/views/layouts/application.html.erb
+    <%= render 'layouts/flash' %>
+
+    # app/views/layouts/_flash.html.erb
+    <% flash.each do |message_type, message| %>
+      <div class="alert alert-<%= message_type %>"><%= message %></div>
+    <% end %>
+
+    # app/controllers/users_controllers.rb
+    class UsersController < ApplicationController
+      ...
+      def create
+        @user = User.new(user_params)
+        if @user.save
+          flash[:success] = 'Welcome to the Sample App!'
+          redirect_to @user
+        else
+          render 'new'
+        end
+      end
+      ...
+    end
+
+`flash`方法的语法：
+
+    rails c
+
+        flash = {success: 'It works!', warning: 'It failed!'}
+        flash.each do |message_type, message|
+          puts "#{message_type}: #{message}"
+        end
+
+        输出结果：
+
+            success: It works!
+            warning: It failed!
 
 
 ## Rails测试
@@ -2121,24 +2868,26 @@ Rails应用程序默认有开发、测试、开发三种环境。三种环境下
 
 `test/models/`目录下是单元测试代码(针对Model)，`test/controllers/`目录下是功能测试代码(针对Controller)，`test/integration/`目录下是集成测试代码。
 
-### Fixture
-
-`test/fixtures/`目录下是Fixture文件。Fixture是组织测试数据的一种方式，当提到Fixture时指的就是样例数据。Fixture用YAML语言书写，有了Fixture，在测试运行之前我们就有了预定义的数据。在Fixture中，一个文件对应一个Model。
+### 测试夹具(fixtures)
 
 参考资料：[Fixture API文档](http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html)
 
+`test/fixtures/`目录下是Fixture文件。Fixture是组织测试数据的一种方式，当提到Fixture时指的就是样例数据。Fixture用YAML语言书写，有了Fixture，在测试运行之前我们就有了预定义的数据。在Fixture中，一个文件对应一个Model。
+
+模型校验对测试夹具无效，因此需要注意测试夹具数据是否有效。可以在单元测试中使用测试夹具数据。
+
 Fixture示例代码：
 
-    # lo & behold! I am a YAML comment!
-    david:
-      name: David Heinemeier Hansson
-      birthday: 1979-10-15
-      profession: Systems development
+    # test/fixturers/users.html
+    tom:
+      name: Tom
+      character: cat
+      age: 3
 
-    steve:
-      name: Steve Ross Kellock
-      birthday: 1974-09-27
-      profession: guy with keyboard
+    jerry:
+      name: Jerry
+      charactoer: mouse
+      age: 2
 
 关联Model的示例代码(`belongs_to`和`has_many`)：
 
@@ -2187,7 +2936,7 @@ Fixture示例代码：
 
 注：针对Model的单元测试。默认使用内置的minitest。
 
-单元测试的示例代码：
+单元测试的示例代码-示例代码一：
 
     rails g scaffold article title:string body:text
 
@@ -2208,6 +2957,40 @@ Fixture示例代码：
         end
 
 `ActiveSupport::TestCase`的父类是`Minitest::Test`，提供了以`test_`开头的方法，用于编写测试。当提到一个测试时，指的就是一个以`test_`开头的方法。`test_password`和`test_valid_password`都是合法的测试名。一个测试用例可以包含多个测试。
+
+`assert`和`assert_not`的功能正好相反，就像`if`和`unless`修饰符那样。
+
+单元测试的示例代码-示例代码二：
+
+    # railg g model User name:string email:string
+    # test/models/user_test.rb
+    require 'test_helper'
+    class UserTest < ActiveSupport::TestCase
+      def setup
+        @user = User.new(name: 'chinakr', email: 'chinakr@gmail.com')
+      end
+      test 'should be valid' do
+        assert @user.valid?
+      end
+    end
+
+上面的单元测试中，首先创建了User模型的一条记录，然后测试这条记录是否是合法的。然后可以通过`rails test:models`运行单元测试。
+
+单元测试的示例代码-记录不能重复：
+
+    # railg g model User name:string email:string
+    # test/models/user_test.rb
+    require 'test_helper'
+    class UserTest < ActiveSupport::TestCase
+      def setup
+        @user = User.new(name: 'chinakr', email: 'chinakr@gmail.com')
+      end
+      test 'email should be unique' do
+        dup_user = @user.dup
+        @user.save
+        assert_not dup_user.valid?
+      end
+    end
 
 下面两种定义测试的方法是等价的：
 
@@ -2378,6 +3161,69 @@ Rails测试框架是模块化的，我们可以编写自己的断言。Rails就�
 
 集成测试示例代码：
 
+    rails g integration_test site_layout
+
+        Running via Spring preloader in process 34567
+              invoke  test_unit
+              create    test/integration/site_layout_test.rb
+
+    subl test/integration/site_layout_test.rb
+
+        require 'test_helper'
+        class SiteLayoutTest < ActionDispatch::IntegrationTest
+          # test "the truth" do
+          #   assert true
+          # end
+          test 'layout links' do
+            get root_path
+            assert_template 'static_pages/home'
+            assert_select 'a[href=?]', root_path, count: 2
+            assert_select 'a[href=?]', help_path
+          end
+        end
+
+    rails test:integration
+
+`assert_select`用法示例：
+
+| 代码                                          | 匹配的HTML                       |
+|-----------------------------------------------|----------------------------------|
+| `assert_select "div"`                         | `<div>foobar</div>`              |
+| `assert_select "div", "foobar"`               | `<div>foobar</div>`              |
+| `assert_select "div.nav"`                     | `<div class="nav">foobar</div>`  |
+| `assert_select "div#profile"`                 | `<div id="profile">foobar</div>` |
+| `assert_select "div[name=yo]"`                | `<div name="yo">hey</div>`       |
+| `assert_select "a[href=?]", ’/’, count: 1`    | `<a href="/">foo</a>`            |
+| `assert_select "a[href=?]", ’/’, text: "foo"` | `<a href="/">foo</a>`            |
+
+示例代码-注册信息不合法时不会创建新用户，合法时会创建新用户：
+
+    rails g integration_test signup
+
+    # test/integration/signup_test.rb
+    require 'test_helper'
+    class SignupTest < ActionDispatch::IntegrationTest
+      test 'invalid signup info' do
+        get signup_path
+        assert_no_difference 'User.count' do
+          post users_path, user: {name: '', email: 'www@example', password: 'password', password_confirmation: 'wrongpassword'}
+          assert_template 'users/new'
+        end
+      end
+      test 'valid signup info' do
+        get signup_path
+        assert_difference 'User.count', 1 do
+          post_via_redirect users_path, user: {name: 'example', email: 'www@example.com', password: 'password', password_confirmation: 'password'}
+        end
+        assert_template 'users/show'
+      end
+    end
+
+    rails test:integration
+
+其中`assert_no_difference 'User.count' do ... end`认为块运行后表达式`User.count`的值不变，`assert_difference 'User.count', 1 do ... end`认为块运行后表达式`User.count`的值变化是`1`。`get signup_path`以GET方式访问页面，`post users_path, user: {...}`以POST方案提交表单，`post_via_redirect users_path, user: {}`以POST方式提交表单并跳转，`assert_template 'users/new'`认为最后渲染的页面是`users/show`。
+
+
 ### 测试路由
 
 示例代码：
@@ -2415,6 +3261,24 @@ Rails测试框架是模块化的，我们可以编写自己的断言。Rails就�
 * [Rails 调试和记录日志方法总结](http://rubyer.me/blog/352/ "Google关键字：rails log")
 
 
+## Rails对Ruby的扩展
+
+注：这些语言特性可以在`rails c`控制台中测试。
+
+检测字符串是否为空白：
+
+    '   '.blank?    # true
+
+控制器的类继承树：
+
+    c = StaticPagesController.new
+    c.class    # => StaticPagesController
+    c.class.superclass    # => ApplicationController
+    c.class.superclass.superclass    # => ActionController::Base
+    c.class.superclass.superclass.superclass    # => ActionController::Metal
+    c.class.superclass.superclass.superclass.superclass    # => AbstractController::Base
+    c.class.superclass.superclass.superclass.superclass.superclass    # => Object
+    c.class.superclass.superclass.superclass.superclass.superclass.superclass    # => BasicObject
 
 ## 实用技巧
 
@@ -2476,6 +3340,46 @@ subl app/models/order.rb
 * [Creating Autocomplete datalist Controls](http://www.sitepoint.com/creating-autocomplete-datalist-controls/ "Google关键字：datalist autocomplete ajax rails")
 * [jQuery AJAX HTML5 Datalist Autocomplete Example](http://www.sitepoint.com/jquery-ajax-html5-datalist-autocomplete/ "Google关键字：datalist autocomplete ajax coffeescript")
 
+
+## 手动用户认证
+
+功能设计：
+
+* 用户注册
+* 用户登录
+* 用户详细页
+* 重新设置用户密码
+* 用户退出
+
+数据表设计-`users`数据表：
+
+| 字段  | 类型    |
+|-------|---------|
+| id    | integer |
+| name  | string  |
+| email | string  |
+
+相关代码：
+
+    rails g controller Users new
+
+    rails g model User name:string email:string
+    rails db:migrate
+
+注：在生成控制器时使用`Users`，在生成模型时使用`User`。生成的数据表是`users`，对模型类的引用是`User`。
+
+    subl app/models/user.rb
+
+    rails c
+
+        user = User.new(name: 'chinakr', email: 'chinakr@gmail.com')
+        user.valid?    # => true
+        user.save
+
+        user = User.find(1)
+        user.name    # => "chinakr"
+        user.email    # => "chinakr@gmail.com"
+        user.updated_at
 
 
 ## 实现邮件提醒功能
@@ -3218,6 +4122,21 @@ subl app/models/order.rb
 
 部署成功！
 
+### 启用SSL(https)
+
+1.修改生产环境配置文件：
+
+    subl config/environments/production.rb
+
+        config.force_ssl = true
+
+2.购买SSL认证服务。
+
+3.为Web服务器配置SSL。
+
+当把应用程序部署在Heroku上时，步骤2、3可以省略。
+
+
 ### Rails应用程序的自动化部署
 
 参考：[用nginx+Puma+Mina部署Rails应用程序](rails-deploy-nginx-puma-mina.md)
@@ -3375,6 +4294,34 @@ Heroku使用PostgreSQL数据库：
 
     heroku logs
 
+在Heroku上运行控制台：
+
+    heroku run rails c
+
+在Heroku上的沙箱中运行控制台：
+
+    heroku run rails c --sandbox
+
+值得进一步解决的两个问题：
+
+    git push heroku
+
+        remote: ###### WARNING:
+        remote:        You have not declared a Ruby version in your Gemfile.
+        remote:        To set your Ruby version add this line to your Gemfile:
+        remote:        ruby '2.2.4'
+        remote:        # See https://devcenter.heroku.com/articles/ruby-versions for more information.
+        remote:
+        remote: ###### WARNING:
+        remote:        No Procfile detected, using the default web server.
+        remote:        We recommend explicitly declaring how to boot your server process via a Procfile.
+        remote:        https://devcenter.heroku.com/articles/ruby-default-web-server
+
+参考资料：
+
+* [Ruby on Rails Tutorial > Chanpter 7: Sign up > 7.5.2 Production webserver](https://www.railstutorial.org/book/sign_up#sec-production_webserver)
+* [Ruby on Rails Tutorial > Chanpter 7: Sign up > 7.5.3 Ruby version number](https://www.railstutorial.org/book/sign_up#sec-ruby_version_number)
+
 
 ## 项目实例
 
@@ -3460,9 +4407,21 @@ Heroku使用PostgreSQL数据库：
 
 Cloud9使用方法：
 
-* 在编辑器中通过`Cmd + S`快捷键保存当前修改。
+* 在编辑器中通过`Cmd + S`快捷键保存当前修改，`Cmd + D`删除当前行。
 * 在Chrome中使用Cloud9时，记得为该网域关闭AdBlock Plus，否则语法高亮等功能会失效。
 * 在终端中通过`puma s -b $IP -p $PORT`启动测试用Web服务器，在Share菜单中允许从外部访问测试用Web服务器并获得访问所需的URL地址。
 * 在Dashboard中新建workspace，每个workspace相当于一个独立的开发用VPS，具有独立的`~/workspace/`目录。
 * 在一个`~/workspace/`目录下可以通过`rails new appname`创建多个Rails应用程序，在某个应用程序目录下运行`puma s ...`然后可以从外部访问这个应用程序的测试服务器。
 * 经测试，Cloud 9完美支持ruby 2.3.1和rails 5.0.0.rc1。
+
+查看环境变量：
+
+    echo $IP    # => 0.0.0.0
+    echo $PORT    # => 8080
+
+在开发环境下启动Web服务器：
+
+    rails c -b $IP -p $PORT
+
+注：如果在Cloud9上启动了Web服务器并且在Share中打开了外部访问，但是从外部访问不正常时，可以尝试重启Workspace。
+
